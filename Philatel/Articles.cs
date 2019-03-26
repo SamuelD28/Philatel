@@ -22,10 +22,10 @@ namespace Philatel
     {
         public static string ValeurEnString(double p_valeur)
             => (p_valeur < 1.0) ? $"{(int)Math.Round(p_valeur * 100)} ¢" : $"{p_valeur:C}";
-            // N.B. Il manque probablement un test pour savoir s'il faut espace avant ¢ (il suffirait de
-            //      regarder si :C en met un)
+        // N.B. Il manque probablement un test pour savoir s'il faut espace avant ¢ (il suffirait de
+        //      regarder si :C en met un)
 
-    public static string CoinEnString(Coin p_coin)
+        public static string CoinEnString(Coin p_coin)
         {
             switch (p_coin)
             {
@@ -41,7 +41,7 @@ namespace Philatel
         {
             switch (p_oblitération)
             {
-                case Oblitération.Aucune : return "non oblitéré";
+                case Oblitération.Aucune: return "non oblitéré";
                 case Oblitération.Normale: return "oblitéré";
                 default: Debug.Assert(false); return "";
             }
@@ -68,9 +68,9 @@ namespace Philatel
         public double ValeurTimbre { get; }
         public Oblitération Oblitération { get; }
 
-        public override string Description() 
+        public override string Description()
             => Catégorie + " " + Timbre.OblitérationEnString(Oblitération);
-                
+
         public override string ValeurNominale()
             => Timbre.ValeurEnString(ValeurTimbre);
     }
@@ -78,7 +78,7 @@ namespace Philatel
     [Serializable]
     public class BlocDeCoin : ArticlePhilatélique
     {
-        public BlocDeCoin(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé, 
+        public BlocDeCoin(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé,
                           Coin p_coin, double p_valeurTimbre, int p_nbTimbres)
             : base(p_numéro, p_motif, p_parution, p_prixPayé)
         {
@@ -194,6 +194,6 @@ namespace Philatel
         {
             return DialogResult.OK ==
                 new DlgSaisieBlocDeCoin(TypeDeSaisie.Suppression, p_article as BlocDeCoin).ShowDialog();
-        }        
+        }
     }
- }
+}
