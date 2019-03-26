@@ -7,9 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Philatel", "Philatel\Philat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AP-PPJO", "AP-PPJO\AP-PPJO.csproj", "{E3E58CB7-55C1-4D9D-82E0-5B174BA26B17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhilatelLibrary", "PhilatelLibrary\PhilatelLibrary.csproj", "{B19756DA-911A-49D2-9C43-9339AB3F7AF9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandesAnnulables", "CommandesAnnulables\CommandesAnnulables.csproj", "{FEDE6BD3-A375-48B5-950C-91B37A9F6B24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhilatelLibrary", "PhilatelLibrary\PhilatelLibrary.csproj", "{B19756DA-911A-49D2-9C43-9339AB3F7AF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{B19756DA-911A-49D2-9C43-9339AB3F7AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B19756DA-911A-49D2-9C43-9339AB3F7AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B19756DA-911A-49D2-9C43-9339AB3F7AF9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEDE6BD3-A375-48B5-950C-91B37A9F6B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEDE6BD3-A375-48B5-950C-91B37A9F6B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEDE6BD3-A375-48B5-950C-91B37A9F6B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEDE6BD3-A375-48B5-950C-91B37A9F6B24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
