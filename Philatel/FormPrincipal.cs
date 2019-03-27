@@ -105,6 +105,7 @@ namespace Philatel
 			ICommande commandeAnnuler = m_doc.RetirerCommandeAnnulable();
             commandeAnnuler.Annuler();
 			m_doc.PousserCommandeRétablissante(commandeAnnuler);
+			MettreÀJour(m_doc);
         }
 
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
@@ -130,6 +131,21 @@ namespace Philatel
 				m_doc.ViderCommandeRétablissante();
 			}
         }
+
+		private void effacertout_Click(object sender, EventArgs e)
+		{
+			if(ConfirmerOkAnnuler("Voulez-vous effacer toute la liste d'articles"))
+			{
+				ICommande commande = new CommandeEffacerTout();
+
+				if (commande.Exécuter())
+				{
+					m_doc.PousserCommandeAnnulable(commande);
+					m_doc.ViderCommandeRétablissante();
+					MettreÀJour(m_doc);
+				}
+			}
+		}
 
         private void buttonAfficher_Click(object sender, EventArgs e)
         {
@@ -171,7 +187,9 @@ namespace Philatel
 				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
 				commandeRétablissante.Rétablir();
 				m_doc.PousserCommandeAnnulable(commandeRétablissante);
+				MettreÀJour(m_doc);
 			}
 		}
+
 	}
 }

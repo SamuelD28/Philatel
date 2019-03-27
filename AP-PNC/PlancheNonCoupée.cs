@@ -44,32 +44,25 @@ namespace AP_PNC
 
 		private FabriquePNC() { }
 
-		public ICommande CréerCommandeAjouter()
-			=> new CommandeAjoutPNC();
+		public ICommande CréerCommandeAjouter() => new CommandeAjoutPNC();
 
-		public ICommande CréerCommandeModifier(ArticlePhilatélique p_article)
-			=> new CommandeModificationPNC(p_article as PlancheNonCoupée);
+		public ICommande CréerCommandeModifier(ArticlePhilatélique p_article) => new CommandeModificationPNC(p_article as PlancheNonCoupée);
+		
+		public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_article) => new CommandeSuppression(p_article);
 
-		public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_article)
-			=> new CommandeSuppression(p_article);
-
-		public string DescriptionPourMenu()
-			=> "Planche non coupée (PNC)";
+		public string DescriptionPourMenu() => "Planche non coupée (PNC)";
 	}
 
 	[Serializable]
 	class CommandeAjoutPNC : CommandeAjout
 	{
-		public override DlgSaisieArticle CréerDlgSaisie()
-			=> new DlgSaisiePNC(TypeDeSaisie.Ajout, null);
+		public override DlgSaisieArticle CréerDlgSaisie() => new DlgSaisiePNC(TypeDeSaisie.Ajout, null);
 	}
 
 	[Serializable]
     class CommandeModificationPNC : CommandeModification
     {
-        public CommandeModificationPNC(PlancheNonCoupée p_article)
-            : base(p_article)
-        { }
+        public CommandeModificationPNC(PlancheNonCoupée p_article): base(p_article){ }
 
         public override DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article)
             => new DlgSaisiePNC(TypeDeSaisie.Modification, p_article as PlancheNonCoupée);  

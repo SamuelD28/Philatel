@@ -197,6 +197,9 @@ namespace Philatel
 			Notifier(this);
 		}
 
+		public void Vider() => m_articles.Clear();
+
+		public void Remplir(IEnumerable<ArticlePhilatélique> articles) => m_articles = (Stack<ArticlePhilatélique>)articles;
 
 		/// <summary>
 		/// Retire un article des articles conservés.

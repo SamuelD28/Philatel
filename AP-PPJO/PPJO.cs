@@ -15,8 +15,10 @@ namespace PhilatelPPJO
     [Serializable]
     public class PPJO : ArticlePhilatélique
     {
-        public PPJO(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé,
-                                        double p_valeurTimbres)
+        public PPJO(int p_numéro, string p_motif, 
+					DateTime? p_parution, 
+					double p_prixPayé,
+                    double p_valeurTimbres)
             : base(p_numéro, p_motif, p_parution, p_prixPayé)
         {
             ValeurTimbres = p_valeurTimbres;

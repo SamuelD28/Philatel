@@ -33,6 +33,7 @@
 			this.fichierQuitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.opérationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.opérationsAnnulerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Rétablir_Btn = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.opérationsAjouterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.opérationsModifierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +50,7 @@
 			this.buttonAfficher = new System.Windows.Forms.Button();
 			this.buttonModifier = new System.Windows.Forms.Button();
 			this.buttonSupprimer = new System.Windows.Forms.Button();
-			this.Rétablir_Btn = new System.Windows.Forms.ToolStripMenuItem();
+			this.effacertout = new System.Windows.Forms.Button();
 			this.menuStripPrincipal.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -98,32 +99,40 @@
 			// 
 			this.opérationsAnnulerToolStripMenuItem.Name = "opérationsAnnulerToolStripMenuItem";
 			this.opérationsAnnulerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.opérationsAnnulerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.opérationsAnnulerToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
 			this.opérationsAnnulerToolStripMenuItem.Text = "&Annuler";
 			this.opérationsAnnulerToolStripMenuItem.Click += new System.EventHandler(this.opérationsAnnulerToolStripMenuItem_Click);
+			// 
+			// Rétablir_Btn
+			// 
+			this.Rétablir_Btn.Name = "Rétablir_Btn";
+			this.Rétablir_Btn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+			this.Rétablir_Btn.Size = new System.Drawing.Size(157, 22);
+			this.Rétablir_Btn.Text = "Rétablir";
+			this.Rétablir_Btn.Click += new System.EventHandler(this.Rétablir_Btn_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
 			// 
 			// opérationsAjouterToolStripMenuItem
 			// 
 			this.opérationsAjouterToolStripMenuItem.Name = "opérationsAjouterToolStripMenuItem";
-			this.opérationsAjouterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.opérationsAjouterToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
 			this.opérationsAjouterToolStripMenuItem.Text = "A&jouter";
 			// 
 			// opérationsModifierToolStripMenuItem
 			// 
 			this.opérationsModifierToolStripMenuItem.Name = "opérationsModifierToolStripMenuItem";
-			this.opérationsModifierToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.opérationsModifierToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
 			this.opérationsModifierToolStripMenuItem.Text = "&Modifier...";
 			this.opérationsModifierToolStripMenuItem.Click += new System.EventHandler(this.opérationsModifierToolStripMenuItem_Click);
 			// 
 			// opérationsSupprimerToolStripMenuItem
 			// 
 			this.opérationsSupprimerToolStripMenuItem.Name = "opérationsSupprimerToolStripMenuItem";
-			this.opérationsSupprimerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.opérationsSupprimerToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
 			this.opérationsSupprimerToolStripMenuItem.Text = "&Supprimer...";
 			this.opérationsSupprimerToolStripMenuItem.Click += new System.EventHandler(this.opérationsSupprimerToolStripMenuItem_Click);
 			// 
@@ -239,19 +248,22 @@
 			this.buttonSupprimer.UseVisualStyleBackColor = true;
 			this.buttonSupprimer.Click += new System.EventHandler(this.buttonSupprimer_Click);
 			// 
-			// Rétablir_Btn
+			// effacertout
 			// 
-			this.Rétablir_Btn.Name = "Rétablir_Btn";
-			this.Rétablir_Btn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.Rétablir_Btn.Size = new System.Drawing.Size(180, 22);
-			this.Rétablir_Btn.Text = "Rétablir";
-			this.Rétablir_Btn.Click += new System.EventHandler(this.Rétablir_Btn_Click);
+			this.effacertout.Location = new System.Drawing.Point(483, 132);
+			this.effacertout.Name = "effacertout";
+			this.effacertout.Size = new System.Drawing.Size(93, 23);
+			this.effacertout.TabIndex = 7;
+			this.effacertout.Text = "Effacer Tout";
+			this.effacertout.UseVisualStyleBackColor = true;
+			this.effacertout.Click += new System.EventHandler(this.effacertout_Click);
 			// 
 			// FormPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(584, 364);
+			this.Controls.Add(this.effacertout);
 			this.Controls.Add(this.buttonSupprimer);
 			this.Controls.Add(this.buttonModifier);
 			this.Controls.Add(this.buttonAfficher);
@@ -294,6 +306,7 @@
         private System.Windows.Forms.ToolStripMenuItem opérationsModifierToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opérationsSupprimerToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem Rétablir_Btn;
+		private System.Windows.Forms.Button effacertout;
 	}
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using UtilStJ;
 using static UtilStJ.MB;
@@ -18,44 +19,63 @@ namespace Philatel
 		// ICommande Cloner();  // Pas utile dans cette version
 	}
 
-    //public class CommandeEffacerTout
-    //{
-    //    public void EffacerTout()
-    //    {
-    //        foreach (var article in Document.Instance.TousLesArticles())
-    //        {
-    //            Document.Instance.RetirerArticle(article.Numéro);
-    //        }
-    //    }
-    //}
-
-    /// Classe abstraite CommandeAjout : 
-    /// <summary>
-    /// permet l'ajout d'un article (abstraite car on doit définir CréerDlgSaisie).
-    /// </summary>
 	[Serializable]
-    public abstract class CommandeAjout : ICommande
-    {
-        int m_numéroArticleAjouté;
+	public class CommandeEffacerTout : ICommande
+	{
+		Stack<ArticlePhilatélique> m_article;
+
+		public void Annuler()
+		{
+			Document.Instance.Remplir(m_article);
+		}
+
+		public bool Exécuter()
+		{
+			try
+			{
+				m_article = new Stack<ArticlePhilatélique>(Document.Instance.TousLesArticles());
+				Document.Instance.Vider();
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public void Rétablir()
+		{
+			Exécuter();
+		}
+	}
+
+	/// Classe abstraite CommandeAjout : 
+	/// <summary>
+	/// permet l'ajout d'un article (abstraite car on doit définir CréerDlgSaisie).
+	/// </summary>
+	[Serializable]
+	public abstract class CommandeAjout : ICommande
+	{
+		int m_numéroArticleAjouté;
 		ArticlePhilatélique m_article;
 
-        public bool Exécuter() // Template Method (appelle une Factory Method)
-        {
-            DlgSaisieArticle d = CréerDlgSaisie();
+		public bool Exécuter() // Template Method (appelle une Factory Method)
+		{
+			DlgSaisieArticle d = CréerDlgSaisie();
 
-            if (d.ShowDialog() == DialogResult.Cancel)
-                return false;
+			if (d.ShowDialog() == DialogResult.Cancel)
+				return false;
 
-            m_article = d.Extraire();
-            m_numéroArticleAjouté = m_article.Numéro;
+			m_article = d.Extraire();
+			m_numéroArticleAjouté = m_article.Numéro;
 
-            Document.Instance.Ajouter(m_article);
-            return true;
-        }
+			Document.Instance.Ajouter(m_article);
+			return true;
+		}
 
-        public void Annuler() => Document.Instance.RetirerArticle(m_numéroArticleAjouté);
+		public void Annuler() => Document.Instance.RetirerArticle(m_numéroArticleAjouté);
 
-        public abstract DlgSaisieArticle CréerDlgSaisie();  // Factory Method
+		public abstract DlgSaisieArticle CréerDlgSaisie();  // Factory Method
 
 		public void Rétablir()
 		{
@@ -63,39 +83,39 @@ namespace Philatel
 		}
 	}
 
-    /// Classe abstraite CommandeModification : 
-    /// <summary>
-    /// permet la modification d'un article (abstraite car on doit définir CréerDlgSaisie).
-    /// </summary>
+	/// Classe abstraite CommandeModification : 
+	/// <summary>
+	/// permet la modification d'un article (abstraite car on doit définir CréerDlgSaisie).
+	/// </summary>
 	[Serializable]
-    public abstract class CommandeModification : ICommande
-    {
-        public CommandeModification(ArticlePhilatélique p_articleCourant)
-        {
-            m_article = p_articleCourant;
-        }
+	public abstract class CommandeModification : ICommande
+	{
+		public CommandeModification(ArticlePhilatélique p_articleCourant)
+		{
+			m_article = p_articleCourant;
+		}
 
-        ArticlePhilatélique m_article;
+		ArticlePhilatélique m_article;
 
-        public bool Exécuter() // Template Method (appelle une Factory Method)
-        {
-            DlgSaisieArticle d = CréerDlgSaisie(m_article);
+		public bool Exécuter() // Template Method (appelle une Factory Method)
+		{
+			DlgSaisieArticle d = CréerDlgSaisie(m_article);
 
-            if (d.ShowDialog() == DialogResult.Cancel)
-                return false;
+			if (d.ShowDialog() == DialogResult.Cancel)
+				return false;
 
-            Document.Instance.RetirerArticle(m_article.Numéro);
-            Document.Instance.Ajouter(d.Extraire());
-            return true;
-        }
+			Document.Instance.RetirerArticle(m_article.Numéro);
+			Document.Instance.Ajouter(d.Extraire());
+			return true;
+		}
 
-        public void Annuler()
-        {
-            Document.Instance.RetirerArticle(m_article.Numéro);
-            Document.Instance.Ajouter(m_article);
-        }
+		public void Annuler()
+		{
+			Document.Instance.RetirerArticle(m_article.Numéro);
+			Document.Instance.Ajouter(m_article);
+		}
 
-        public abstract DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article);  // Factory Method
+		public abstract DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article);  // Factory Method
 
 		public void Rétablir()
 		{
@@ -103,38 +123,38 @@ namespace Philatel
 		}
 	}
 
-    /// Classe CommandeSuppression :
-    /// <summary>
-    /// permet la suppression d'un article (pas abstraite mais on peut en dériver si on n'aime pas la façon
-    /// dont est fait la confirmation dans la fonction ConfirmerSuppression de base).
-    /// </summary>
+	/// Classe CommandeSuppression :
+	/// <summary>
+	/// permet la suppression d'un article (pas abstraite mais on peut en dériver si on n'aime pas la façon
+	/// dont est fait la confirmation dans la fonction ConfirmerSuppression de base).
+	/// </summary>
 	[Serializable]
-    public class CommandeSuppression : ICommande
-    {
-        public CommandeSuppression(ArticlePhilatélique p_articleCourant)
-        {
-            m_article = p_articleCourant;
-        }
+	public class CommandeSuppression : ICommande
+	{
+		public CommandeSuppression(ArticlePhilatélique p_articleCourant)
+		{
+			m_article = p_articleCourant;
+		}
 
-        ArticlePhilatélique m_article;
+		ArticlePhilatélique m_article;
 
-        public bool Exécuter()  // Template Method (ConfirmerSuppression peut être supplantée)
-        {
-            if (!ConfirmerSuppression(m_article))
-                return false;
+		public bool Exécuter()  // Template Method (ConfirmerSuppression peut être supplantée)
+		{
+			if (!ConfirmerSuppression(m_article))
+				return false;
 
-            Document.Instance.RetirerArticle(m_article.Numéro);
-            return true;
-        }
+			Document.Instance.RetirerArticle(m_article.Numéro);
+			return true;
+		}
 
-        public void Annuler() => Document.Instance.Ajouter(m_article);
+		public void Annuler() => Document.Instance.Ajouter(m_article);
 
-        public virtual bool ConfirmerSuppression(ArticlePhilatélique p_article)
-        {
-            return ConfirmerOuiNon("Êtes-vous sûr de vouloir retirer\n\n" +
-                                   p_article.ToString() +
-                                   "\n\n?");
-        }
+		public virtual bool ConfirmerSuppression(ArticlePhilatélique p_article)
+		{
+			return ConfirmerOuiNon("Êtes-vous sûr de vouloir retirer\n\n" +
+								   p_article.ToString() +
+								   "\n\n?");
+		}
 
 		public void Rétablir()
 		{
