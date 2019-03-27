@@ -27,7 +27,6 @@ namespace Philatel
 
         Document m_doc = Document.Instance;
         ArticlePhilatélique m_articleCourant = null;
-        Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Z
 
         public void MettreÀJour(Document p_sujet)
         {
@@ -46,14 +45,11 @@ namespace Philatel
             listViewArticles_SelectedIndexChanged(null, null);
         }
 
-        private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e)
-            => new DlgÀPropos().ShowDialog();
+        private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e) => new DlgÀPropos().ShowDialog();
 
-        private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e)
-            => Close();
+        private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e) => Close();
 
-        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
-            => m_doc.Fermer();
+        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e) => m_doc.Fermer();
 
         private void listViewArticles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -83,46 +79,56 @@ namespace Philatel
 
         private void ActiverDésactiverMenus(object sender, EventArgs e)
         {
-            opérationsAnnulerToolStripMenuItem.Enabled = m_commandesAnnulables.Count != 0;
-
+            opérationsAnnulerToolStripMenuItem.Enabled = !m_doc.AucuneCommandeAnnulable();
             bool actif = m_articleCourant != null;
-
+			Rétablir_Btn.Enabled = (!m_doc.AucuneCommandeRetablissante());
             opérationsModifierToolStripMenuItem.Enabled = actif;
             opérationsSupprimerToolStripMenuItem.Enabled = actif;
         }
 
-        private void opérationsAnnulerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var commandeAnnuler = m_commandesAnnulables.Pop();
-            commandeAnnuler.Annuler();
-        }
-
         public void OpérationsAjouter(object p_sender, EventArgs p_e)
         {
-            var tsi = (ToolStripMenuItem)p_sender;
-            var fab = (IFabriqueCommande)tsi.Tag;
-            var commande = fab.CréerCommandeAjouter();
+			//Gere le bouton ajouter
+            ToolStripMenuItem tsi = (ToolStripMenuItem)p_sender;
+            IFabriqueCommande fab = (IFabriqueCommande)tsi.Tag;
+            ICommande commande = fab.CréerCommandeAjouter();
 
             if (commande.Exécuter())
-                m_commandesAnnulables.Push(commande);
+			{
+				m_doc.PousserCommandeAnnulable(commande);
+				m_doc.ViderCommandeRétablissante();
+			}
+        }
+
+        private void opérationsAnnulerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			ICommande commandeAnnuler = m_doc.RetirerCommandeAnnulable();
+            commandeAnnuler.Annuler();
+			m_doc.PousserCommandeRétablissante(commandeAnnuler);
         }
 
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
-            var commande = fab.CréerCommandeModifier(m_articleCourant);
+            IFabriqueCommande fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
+            ICommande commande = fab.CréerCommandeModifier(m_articleCourant);
 
             if (commande.Exécuter())
-                m_commandesAnnulables.Push(commande);
+			{
+				m_doc.PousserCommandeAnnulable(commande);
+				m_doc.ViderCommandeRétablissante();
+			}
          }
 
         private void opérationsSupprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
-            var commande = fab.CréerCommandeSupprimer(m_articleCourant);
+            IFabriqueCommande fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
+            ICommande commande = fab.CréerCommandeSupprimer(m_articleCourant);
 
             if (commande.Exécuter())
-                m_commandesAnnulables.Push(commande);
+			{
+				m_doc.PousserCommandeAnnulable(commande);
+				m_doc.ViderCommandeRétablissante();
+			}
         }
 
         private void buttonAfficher_Click(object sender, EventArgs e)
@@ -131,16 +137,12 @@ namespace Philatel
                     " : Paresse ! (il faudrait tout afficher, sauf le numéro, interne)");
         }// J'aurais pu mettre « => », mais je continue la règle « plus qu'une ligne == bloc ».
 
-
         // On aurait pu associer directement ces trois événements aux fonctions déjà existantes...
-        private void buttonModifier_Click(object sender, EventArgs e)
-            => opérationsModifierToolStripMenuItem_Click(sender, e);
+        private void buttonModifier_Click(object sender, EventArgs e) => opérationsModifierToolStripMenuItem_Click(sender, e);
         
-        private void buttonSupprimer_Click(object sender, EventArgs e)
-            => opérationsSupprimerToolStripMenuItem_Click(sender, e);
+        private void buttonSupprimer_Click(object sender, EventArgs e) => opérationsSupprimerToolStripMenuItem_Click(sender, e);
 
-        private void listViewArticles_DoubleClick(object sender, EventArgs e)
-            => buttonModifier_Click(sender, e);  // Ou ... afficher ...
+        private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e);  // Ou ... afficher ...
 
         // Cette méthode est ajoutée pour que les raccourcis clavier soient actifs ou pas, correctement.
         // Dans les premières versions de .NET (et dans les MFC, et peut-être ailleurs), les raccourcis
@@ -160,5 +162,16 @@ namespace Philatel
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-    }
+
+		private void Rétablir_Btn_Click(object sender, EventArgs e)
+		{
+
+			//Numero C : A revoir
+			if(!m_doc.AucuneCommandeRetablissante()){
+				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
+				commandeRétablissante.Rétablir();
+				m_doc.PousserCommandeAnnulable(commandeRétablissante);
+			}
+		}
+	}
 }

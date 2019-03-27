@@ -152,12 +152,14 @@ namespace Philatel
     //////////// Les commandes des deux types d'articles de base
     ////////////
 
+	[Serializable]
     public class CommandeAjoutTS : CommandeAjout
     {
         public override DlgSaisieArticle CréerDlgSaisie()
             => new DlgSaisieTimbreSeul(TypeDeSaisie.Ajout, null);
     }
 
+	[Serializable]
     public class CommandeModificationTS : CommandeModification
     {
         public CommandeModificationTS(TimbreSeul p_article)
@@ -168,12 +170,14 @@ namespace Philatel
             => new DlgSaisieTimbreSeul(TypeDeSaisie.Modification, p_article as TimbreSeul);
     }
 
+	[Serializable]
     public class CommandeAjoutBC : CommandeAjout
     {
         public override DlgSaisieArticle CréerDlgSaisie()
             => new DlgSaisieBlocDeCoin(TypeDeSaisie.Ajout, null);
     }
 
+	[Serializable]
     public class CommandeModificationBC : CommandeModification
     {
         public CommandeModificationBC(BlocDeCoin p_article)
@@ -184,6 +188,7 @@ namespace Philatel
             => new DlgSaisieBlocDeCoin(TypeDeSaisie.Modification, p_article as BlocDeCoin);
     }
 
+	[Serializable]
     public class CommandeSuppressionBC : CommandeSuppression
     {
         public CommandeSuppressionBC(BlocDeCoin p_article)
