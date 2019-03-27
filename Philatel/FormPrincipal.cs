@@ -88,39 +88,49 @@ namespace Philatel
             opérationsSupprimerToolStripMenuItem.Enabled = actif;
         }
 
+        public void OpérationsAjouter(object p_sender, EventArgs p_e)
+        {
+			//Gere le bouton ajouter
+            ToolStripMenuItem tsi = (ToolStripMenuItem)p_sender;
+            IFabriqueCommande fab = (IFabriqueCommande)tsi.Tag;
+            ICommande commande = fab.CréerCommandeAjouter();
+
+            if (commande.Exécuter())
+			{
+                m_commandesAnnulables.Push(commande);
+				m_commandesRétablissante.Clear();
+			}
+        }
+
         private void opérationsAnnulerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var commandeAnnuler = m_commandesAnnulables.Pop();
+            ICommande commandeAnnuler = m_commandesAnnulables.Pop();
             commandeAnnuler.Annuler();
 			m_commandesRétablissante.Push(commandeAnnuler);
         }
 
-        public void OpérationsAjouter(object p_sender, EventArgs p_e)
-        {
-            var tsi = (ToolStripMenuItem)p_sender;
-            var fab = (IFabriqueCommande)tsi.Tag;
-            var commande = fab.CréerCommandeAjouter();
-
-            if (commande.Exécuter())
-                m_commandesAnnulables.Push(commande);
-        }
-
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
-            var commande = fab.CréerCommandeModifier(m_articleCourant);
+            IFabriqueCommande fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
+            ICommande commande = fab.CréerCommandeModifier(m_articleCourant);
 
             if (commande.Exécuter())
+			{
                 m_commandesAnnulables.Push(commande);
+				m_commandesRétablissante.Clear();
+			}
          }
 
         private void opérationsSupprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
-            var commande = fab.CréerCommandeSupprimer(m_articleCourant);
+            IFabriqueCommande fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
+            ICommande commande = fab.CréerCommandeSupprimer(m_articleCourant);
 
             if (commande.Exécuter())
+			{
                 m_commandesAnnulables.Push(commande);
+				m_commandesRétablissante.Clear();
+			}
         }
 
         private void buttonAfficher_Click(object sender, EventArgs e)
@@ -157,6 +167,8 @@ namespace Philatel
 
 		private void Rétablir_Btn_Click(object sender, EventArgs e)
 		{
+
+			//Numero C : A revoir
 			if(m_commandesRétablissante.Count > 0){
 				ICommande commandeRétablissante = m_commandesRétablissante.Pop();
 				commandeRétablissante.Rétablir();

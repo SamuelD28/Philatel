@@ -133,19 +133,13 @@ namespace Philatel
 		/// Renvoie un accès (en lecture seule) à tous les articles (sans ordre particulier).
 		/// </summary>
 		/// <returns>un accès non modifiable à tous les articles (sans ordre particulier)</returns>
-		public IEnumerable<ArticlePhilatélique> TousLesArticles()
-			=> m_articles;
-		// Ou encore (mais ça ne donnerait rien de plus ici) :
-		//    foreach (var article in m_articles) 
-		//        yield return article;
-
+		public IEnumerable<ArticlePhilatélique> TousLesArticles() => m_articles;
 
 		/// <summary>
 		/// Renvoie un numéro d'article pas encore utilisé.
 		/// </summary>
 		/// <returns>un numéro d'article pas encore utilisé</returns>
-		public int NuméroNouvelArticle()
-			=> m_noProchainArticle++;
+		public int NuméroNouvelArticle() => m_noProchainArticle++;
 
 		/// <summary>
 		/// Renvoie l'article demandé (par son numéro) ou null s'il n'existe pas.
