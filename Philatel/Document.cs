@@ -34,6 +34,11 @@ namespace Philatel
 			try
 			{
 				Récupérer();
+
+				if (m_articles.Count == 0)
+				{
+					DataSeed(); //Temporaire. Utiliser pour tester
+				}
 			}
 			catch
 			{
@@ -44,7 +49,6 @@ namespace Philatel
 				Environment.Exit(0);  // Permet d'arrêter le programme directement.
 			}
 		}
-
 
 		/*Méthode sur le manipulation du document et ses données*/
 
@@ -105,6 +109,22 @@ namespace Philatel
 				formateur.Serialize(ficArticles, m_noProchainArticle);
 				formateur.Serialize(ficArticles, m_commandesAnnulables);
 			}
+		}
+
+		/// <summary>
+		/// Fonction utilitaire pour tester plus rapidement la manipulation de timbre.
+		/// </summary>
+		private void DataSeed()
+		{
+			ArticlePhilatélique article1 = new TimbreSeul(3, "fleurie", DateTime.Now, 5.99, 15.99, Oblitération.Aucune);
+			ArticlePhilatélique article2 = new BlocDeCoin(4, "paysage", DateTime.Now, 11.25, Coin.InférieurDroit, 35.25, 12);
+			ArticlePhilatélique article3 = new TimbreSeul(3, "monument", DateTime.Now, 2.99, 7.99, Oblitération.Normale);
+			ArticlePhilatélique article4 = new BlocDeCoin(4, "paysage", DateTime.Now, 7.88, Coin.SupérieurDroit, 49.99, 9);
+
+			m_articles.Push(article1);
+			m_articles.Push(article2);
+			m_articles.Push(article3);
+			m_articles.Push(article4);
 		}
 
 		/// <summary>
@@ -197,6 +217,8 @@ namespace Philatel
 					tempStack.Push(article);
 				}
 			}
+
+			m_articles.Clear();
 
 			foreach (ArticlePhilatélique article in tempStack)
 			{
