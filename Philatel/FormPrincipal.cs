@@ -13,6 +13,9 @@ namespace Philatel
 {
     public partial class FormPrincipal : Form
     {
+        Document m_doc = Document.Instance;
+        ArticlePhilatélique m_articleCourant = null;
+
         public FormPrincipal()
         {
             InitializeComponent();
@@ -24,9 +27,6 @@ namespace Philatel
             LesFabriques.CompléterLeMenu(opérationsAjouterToolStripMenuItem, OpérationsAjouter);
             MettreÀJour(null);
         }
-
-        Document m_doc = Document.Instance;
-        ArticlePhilatélique m_articleCourant = null;
 
         public void MettreÀJour(Document p_sujet)
         {
@@ -45,46 +45,29 @@ namespace Philatel
             listViewArticles_SelectedIndexChanged(null, null);
         }
 
-        private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e) => new DlgÀPropos().ShowDialog();
+        // Cette méthode est ajoutée pour que les raccourcis clavier soient actifs ou pas, correctement.
+        // Dans les premières versions de .NET (et dans les MFC, et peut-être ailleurs), les raccourcis
+        // clavier généraient l'évènement DropDownOpening du menu concerné, mais ce n'est pas le cas
+        // avec les ToolStripMenuItem, alors on active manuellement la mise à jour quand une touche
+        // qui pourrait être un raccourci est détectée. On pourrait faire ça encore plus « subtilement »
+        // si la mise à jour est longue, en détectant seulement les raccourcis vraiment utilisés, etc.
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if ((keyData & Keys.Control) == Keys.Control)
+                ActiverDésactiverMenus(null, null);
 
-        private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e) => Close();
+            // Ou, s'il y a des raccourcis avec Alt, comme Alt+F2, etc. : 
+            // if (... || (keyData & Keys.Alt) == Keys.Alt || ...) 
+            // Ou, s'il y des raccourcis simples comme F2, etc., sans modificateur :
+            // if (... || (F1 <= keyData && keyData <= F12) || ...)  
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e) => m_doc.Fermer();
 
-        private void listViewArticles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listViewArticles.SelectedItems.Count == 0)
-            {
-                textBoxDétails.Text = "";
-                m_articleCourant = null;
-            }
-            else
-            {
-                int noArticle = (int)listViewArticles.SelectedItems[0].Tag;
-                m_articleCourant = m_doc.ArticleSelonNuméro(noArticle);
-                textBoxDétails.Text = m_articleCourant.ToString().Replace("\n", "\r\n"); ;
-            }
 
-            ActiverDésactiverContrôlesPourLaListe();
-        }
-
-        private void ActiverDésactiverContrôlesPourLaListe()
-        {
-            bool actif = m_articleCourant != null;
-
-            buttonAfficher.Enabled = actif;
-            buttonModifier.Enabled = actif;
-            buttonSupprimer.Enabled = actif;
-        }
-
-        private void ActiverDésactiverMenus(object sender, EventArgs e)
-        {
-            opérationsAnnulerToolStripMenuItem.Enabled = !m_doc.AucuneCommandeAnnulable();
-            bool actif = m_articleCourant != null;
-			Rétablir_Btn.Enabled = (!m_doc.AucuneCommandeRetablissante());
-            opérationsModifierToolStripMenuItem.Enabled = actif;
-            opérationsSupprimerToolStripMenuItem.Enabled = actif;
-        }
+		/*--Opération effectuer dans le menu--*/
 
         public void OpérationsAjouter(object p_sender, EventArgs p_e)
         {
@@ -132,6 +115,34 @@ namespace Philatel
 			}
         }
 
+		private void Rétablir_Btn_Click(object sender, EventArgs e)
+		{
+
+			//Numero C : A revoir
+			if(!m_doc.AucuneCommandeRetablissante()){
+				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
+				commandeRétablissante.Rétablir();
+				m_doc.PousserCommandeAnnulable(commandeRétablissante);
+				MettreÀJour(m_doc);
+			}
+		}
+
+        private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e) => new DlgÀPropos().ShowDialog();
+
+        private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e) => Close();
+
+        private void ActiverDésactiverMenus(object sender, EventArgs e)
+        {
+            opérationsAnnulerToolStripMenuItem.Enabled = !m_doc.AucuneCommandeAnnulable();
+            bool actif = m_articleCourant != null;
+			Rétablir_Btn.Enabled = (!m_doc.AucuneCommandeRetablissante());
+            opérationsModifierToolStripMenuItem.Enabled = actif;
+            opérationsSupprimerToolStripMenuItem.Enabled = actif;
+        }
+
+
+		/*--Opération par les boutons sur le coté de la liste--*/
+
 		private void effacertout_Click(object sender, EventArgs e)
 		{
 			if(ConfirmerOkAnnuler("Voulez-vous effacer toute la liste d'articles"))
@@ -153,43 +164,40 @@ namespace Philatel
                     " : Paresse ! (il faudrait tout afficher, sauf le numéro, interne)");
         }// J'aurais pu mettre « => », mais je continue la règle « plus qu'une ligne == bloc ».
 
-        // On aurait pu associer directement ces trois événements aux fonctions déjà existantes...
         private void buttonModifier_Click(object sender, EventArgs e) => opérationsModifierToolStripMenuItem_Click(sender, e);
         
         private void buttonSupprimer_Click(object sender, EventArgs e) => opérationsSupprimerToolStripMenuItem_Click(sender, e);
 
-        private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e);  // Ou ... afficher ...
 
-        // Cette méthode est ajoutée pour que les raccourcis clavier soient actifs ou pas, correctement.
-        // Dans les premières versions de .NET (et dans les MFC, et peut-être ailleurs), les raccourcis
-        // clavier généraient l'évènement DropDownOpening du menu concerné, mais ce n'est pas le cas
-        // avec les ToolStripMenuItem, alors on active manuellement la mise à jour quand une touche
-        // qui pourrait être un raccourci est détectée. On pourrait faire ça encore plus « subtilement »
-        // si la mise à jour est longue, en détectant seulement les raccourcis vraiment utilisés, etc.
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		/*-Méthode pour la liste d'article-*/
+
+        private void ActiverDésactiverContrôlesPourLaListe()
         {
-            if ((keyData & Keys.Control) == Keys.Control)
-                ActiverDésactiverMenus(null, null);
+            bool actif = m_articleCourant != null;
 
-            // Ou, s'il y a des raccourcis avec Alt, comme Alt+F2, etc. : 
-            // if (... || (keyData & Keys.Alt) == Keys.Alt || ...) 
-            // Ou, s'il y des raccourcis simples comme F2, etc., sans modificateur :
-            // if (... || (F1 <= keyData && keyData <= F12) || ...)  
-
-            return base.ProcessCmdKey(ref msg, keyData);
+            buttonAfficher.Enabled = actif;
+            buttonModifier.Enabled = actif;
+            buttonSupprimer.Enabled = actif;
         }
 
-		private void Rétablir_Btn_Click(object sender, EventArgs e)
-		{
+        private void listViewArticles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewArticles.SelectedItems.Count == 0)
+            {
+                textBoxDétails.Text = "";
+                m_articleCourant = null;
+            }
+            else
+            {
+                int noArticle = (int)listViewArticles.SelectedItems[0].Tag;
+                m_articleCourant = m_doc.ArticleSelonNuméro(noArticle);
+                textBoxDétails.Text = m_articleCourant.ToString().Replace("\n", "\r\n"); ;
+            }
 
-			//Numero C : A revoir
-			if(!m_doc.AucuneCommandeRetablissante()){
-				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
-				commandeRétablissante.Rétablir();
-				m_doc.PousserCommandeAnnulable(commandeRétablissante);
-				MettreÀJour(m_doc);
-			}
-		}
+            ActiverDésactiverContrôlesPourLaListe();
+        }
+
+        private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e);  // Ou ... afficher ...
 
 	}
 }
