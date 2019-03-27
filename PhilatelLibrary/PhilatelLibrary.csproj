@@ -4,4 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="IIterator.cs" />
+    <Compile Remove="IPileLimitée.cs" />
+    <Compile Remove="PileLimitée.cs" />
+  </ItemGroup>
+
 </Project>
