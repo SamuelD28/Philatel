@@ -13,8 +13,9 @@ namespace Philatel
 {
     public partial class FormPrincipal : Form
     {
-        Document m_doc = Document.Instance;
-        ArticlePhilatélique m_articleCourant = null;
+		//Propriété privée : Principe de plus grande restriction
+        private Document m_doc = Document.Instance;
+        private ArticlePhilatélique m_articleCourant = null;
 
         public FormPrincipal()
         {
@@ -22,28 +23,14 @@ namespace Philatel
             new TrieurListe(listViewArticles, "ttdN").TrierSelonColonne(0);
 
             Text = InfoApp.Nom;
-            m_doc.Changement += MettreÀJour; // Système d'inscription en observateur
+            m_doc.Changement += MettreÀJourListe; // Système d'inscription en observateur
 
             LesFabriques.CompléterLeMenu(opérationsAjouterToolStripMenuItem, OpérationsAjouter);
-            MettreÀJour(null);
+            MettreÀJourListe(null);
         }
 
-        public void MettreÀJour(Document p_sujet)
-        {
-            listViewArticles.Items.Clear();
 
-            foreach (var article in m_doc.TousLesArticles())
-            {
-                ListViewItem lvi = new ListViewItem(article.Description());
-                lvi.Tag = article.Numéro;
-                lvi.SubItems.Add(article.Motif);
-                lvi.SubItems.Add(article.Parution.HasValue ? article.Parution.Value.ToShortDateString() : "");
-                lvi.SubItems.Add($"{article.PrixPayé:C}");
-                listViewArticles.Items.Add(lvi);
-            }
-
-            listViewArticles_SelectedIndexChanged(null, null);
-        }
+		/*-Méthodes diverses sur le formulaire principal-*/
 
         // Cette méthode est ajoutée pour que les raccourcis clavier soient actifs ou pas, correctement.
         // Dans les premières versions de .NET (et dans les MFC, et peut-être ailleurs), les raccourcis
@@ -64,6 +51,11 @@ namespace Philatel
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+		/// <summary>
+		/// Méthode appelé quand le formulaire ferme.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e) => m_doc.Fermer();
 
 
@@ -88,7 +80,7 @@ namespace Philatel
 			ICommande commandeAnnuler = m_doc.RetirerCommandeAnnulable();
             commandeAnnuler.Annuler();
 			m_doc.PousserCommandeRétablissante(commandeAnnuler);
-			MettreÀJour(m_doc);
+			MettreÀJourListe(m_doc);
         }
 
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,7 +115,7 @@ namespace Philatel
 				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
 				commandeRétablissante.Rétablir();
 				m_doc.PousserCommandeAnnulable(commandeRétablissante);
-				MettreÀJour(m_doc);
+				MettreÀJourListe(m_doc);
 			}
 		}
 
@@ -153,7 +145,7 @@ namespace Philatel
 				{
 					m_doc.PousserCommandeAnnulable(commande);
 					m_doc.ViderCommandeRétablissante();
-					MettreÀJour(m_doc);
+					MettreÀJourListe(m_doc);
 				}
 			}
 		}
@@ -199,5 +191,25 @@ namespace Philatel
 
         private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e);  // Ou ... afficher ...
 
+		/// <summary>
+		/// Méthode qui met à jour la liste d'article
+		/// </summary>
+		/// <param name="p_sujet"></param>
+        public void MettreÀJourListe(Document p_sujet)
+        {
+            listViewArticles.Items.Clear();
+
+            foreach (var article in m_doc.TousLesArticles())
+            {
+                ListViewItem lvi = new ListViewItem(article.Description());
+                lvi.Tag = article.Numéro;
+                lvi.SubItems.Add(article.Motif);
+                lvi.SubItems.Add(article.Parution.HasValue ? article.Parution.Value.ToShortDateString() : "");
+                lvi.SubItems.Add($"{article.PrixPayé:C}");
+                listViewArticles.Items.Add(lvi);
+            }
+
+            listViewArticles_SelectedIndexChanged(null, null);
+        }
 	}
 }

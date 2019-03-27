@@ -18,7 +18,7 @@ namespace Philatel
 		public const int NoPremierArticle = 1;
 		public static Document Instance => m_docUnique.Value;
 
-		//Propriétés privés : Applique le principe d plus grande restriction possible
+		//Propriétés privés : Applique le principe de plus grande restriction possible
 		private static Lazy<Document> m_docUnique = new Lazy<Document>(() => new Document());
 		private Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();
 		private Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();
@@ -45,6 +45,9 @@ namespace Philatel
 			}
 		}
 
+
+		/*Méthode sur le manipulation du document et ses données*/
+
 		/// <summary>
 		/// Termine l'accès aux données et s'assure qu'elles sont bien enregistrées (un message est affichée
 		/// si ce n'est pas le cas).
@@ -64,6 +67,43 @@ namespace Philatel
 						"Les données n'ont pas pu être enregistrées dans {0}.",
 						NomFichierPhilatélie);
 				}
+			}
+		}
+
+		/// <summary>
+		/// Méthode permettant de récupérer les données du document sauvegardés dans un fichier
+		/// </summary>
+		private void Récupérer()
+		{
+			try
+			{
+				using (var ficArticles = File.OpenRead(NomFichierPhilatélie))
+				{
+					var formateur = new BinaryFormatter();
+					formateur.Binder = new LierAssemblagesSimplement();
+					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
+					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
+					m_commandesAnnulables = (Stack<ICommande>)formateur.Deserialize(ficArticles);
+				}
+			}
+			catch (FileNotFoundException)
+			{
+				m_articles = new Stack<ArticlePhilatélique>();
+				m_noProchainArticle = NoPremierArticle;
+			}
+		}
+
+		/// <summary>
+		/// Méthode permettant d'enregistrer les données du document dans un fichier
+		/// </summary>
+		private void Enregistrer()
+		{
+			using (var ficArticles = File.Create(NomFichierPhilatélie))
+			{
+				var formateur = new BinaryFormatter();
+				formateur.Serialize(ficArticles, m_articles);
+				formateur.Serialize(ficArticles, m_noProchainArticle);
+				formateur.Serialize(ficArticles, m_commandesAnnulables);
 			}
 		}
 
@@ -97,36 +137,8 @@ namespace Philatel
 			}
 		}
 
-		private void Récupérer()
-		{
-			try
-			{
-				using (var ficArticles = File.OpenRead(NomFichierPhilatélie))
-				{
-					var formateur = new BinaryFormatter();
-					formateur.Binder = new LierAssemblagesSimplement();
-					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
-					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
-					m_commandesAnnulables = (Stack<ICommande>)formateur.Deserialize(ficArticles);
-				}
-			}
-			catch (FileNotFoundException)
-			{
-				m_articles = new Stack<ArticlePhilatélique>();
-				m_noProchainArticle = NoPremierArticle;
-			}
-		}
 
-		private void Enregistrer()
-		{
-			using (var ficArticles = File.Create(NomFichierPhilatélie))
-			{
-				var formateur = new BinaryFormatter();
-				formateur.Serialize(ficArticles, m_articles);
-				formateur.Serialize(ficArticles, m_noProchainArticle);
-				formateur.Serialize(ficArticles, m_commandesAnnulables);
-			}
-		}
+		/*Opération diverse sur les différents articles*/
 
 		/// <summary>
 		/// Renvoie un accès (en lecture seule) à tous les articles (sans ordre particulier).
@@ -147,7 +159,8 @@ namespace Philatel
 		/// <returns>l'article dont on a fourni le numéro ou null s'il n'existe pas</returns>
 		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro) => m_articles.SingleOrDefault(a => a.Numéro == p_numéro);
 
-		/*-Opérations sur les différents articles-*/
+
+		/*-Opérations CRUD sur les différents articles-*/
 
 		/// <summary>
 		/// Ajoute l'article (les observateurs sont ensuite notifiés).
