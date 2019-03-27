@@ -5,23 +5,24 @@ using static UtilStJ.MB;
 
 namespace Philatel
 {
-    /// Interface ICommande :
-    /// <summary>
-    /// interface de toutes les commandes. La fonction Exécuter renvoie un bool qui permet de
-    /// savoir s'il y a vraiment eu opération et donc s'il faut permettre le Annuler (Undo)
-    /// </summary>
-    public interface ICommande
-    {
-        bool Exécuter();
-        void Annuler();
+	/// Interface ICommande :
+	/// <summary>
+	/// interface de toutes les commandes. La fonction Exécuter renvoie un bool qui permet de
+	/// savoir s'il y a vraiment eu opération et donc s'il faut permettre le Annuler (Undo)
+	/// </summary>
+	public interface ICommande
+	{
+		bool Exécuter();
+		void Annuler();
 		void Rétablir();
-        // ICommande Cloner();  // Pas utile dans cette version
-    }
+		// ICommande Cloner();  // Pas utile dans cette version
+	}
 
     /// Classe abstraite CommandeAjout : 
     /// <summary>
     /// permet l'ajout d'un article (abstraite car on doit définir CréerDlgSaisie).
     /// </summary>
+	[Serializable]
     public abstract class CommandeAjout : ICommande
     {
         int m_numéroArticleAjouté;
@@ -55,6 +56,7 @@ namespace Philatel
     /// <summary>
     /// permet la modification d'un article (abstraite car on doit définir CréerDlgSaisie).
     /// </summary>
+	[Serializable]
     public abstract class CommandeModification : ICommande
     {
         public CommandeModification(ArticlePhilatélique p_articleCourant)
@@ -95,6 +97,7 @@ namespace Philatel
     /// permet la suppression d'un article (pas abstraite mais on peut en dériver si on n'aime pas la façon
     /// dont est fait la confirmation dans la fonction ConfirmerSuppression de base).
     /// </summary>
+	[Serializable]
     public class CommandeSuppression : ICommande
     {
         public CommandeSuppression(ArticlePhilatélique p_articleCourant)

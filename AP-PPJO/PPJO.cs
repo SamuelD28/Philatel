@@ -63,6 +63,7 @@ namespace PhilatelPPJO
     /// <summary>
     /// 
     /// </summary>
+	[Serializable]
     class CommandeAjoutPPJO : CommandeAjout
     {
         public override DlgSaisieArticle CréerDlgSaisie()
@@ -72,6 +73,7 @@ namespace PhilatelPPJO
     /// <summary>
     /// 
     /// </summary>
+	[Serializable]
     class CommandeModificationPPJO : CommandeModification
     {
         public CommandeModificationPPJO(PPJO p_article)

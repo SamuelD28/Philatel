@@ -13,9 +13,6 @@ namespace Philatel
 {
 	public class Document : DocumentObservable<Document>
 	{
-		const string NomFichierPhilatélie = "Philatélie.données";
-		const int NoPremierArticle = 1;
-
 		// Singleton lazy (en principe, il est inutile de le mettre « Lazy » ici, car le code
 		// ne fait pas référence au document avant que tout soit en place. Mais on voit qu'il y
 		// un risque de problème dans l'ordre du chargement et de la création des classes, à
@@ -24,6 +21,14 @@ namespace Philatel
 		// Lazy, mais c'est simple et ça permet de faire ressortir un peu le risque...)
 		static Lazy<Document> m_docUnique = new Lazy<Document>(() => new Document());
 		public static Document Instance => m_docUnique.Value;
+
+		const string NomFichierPhilatélie = "Philatélie.données";
+		const int NoPremierArticle = 1;
+		Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Z
+		Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Y
+		Stack<ArticlePhilatélique> m_articles;  // Ce serait peut-être mieux avec un (Sorted)Dictionary...
+		int m_noProchainArticle;
+		bool m_docModifié = false;
 
 		private Document()
 		{
@@ -41,11 +46,6 @@ namespace Philatel
 			}
 		}
 
-		// Les valeurs sérialisées/désérialisées :
-		Stack<ArticlePhilatélique> m_articles;  // Ce serait peut-être mieux avec un (Sorted)Dictionary...
-		int m_noProchainArticle;
-		bool m_docModifié = false;
-
 		/// <summary>
 		/// Termine l'accès aux données et s'assure qu'elles sont bien enregistrées (un message est affichée
 		/// si ce n'est pas le cas).
@@ -54,17 +54,19 @@ namespace Philatel
 		{
 			if (m_docModifié)
 			{
-				try
-				{
+				//Je retirer temporairement le try-catch pour comprendre les erreurs
+				//durant lenregistrement
+				//try
+				//{
 					Enregistrer();
-				}
-				catch
-				{
-					AvertirCritique(
-						"***** ERREUR *****\n" +
-						"Les données n'ont pas pu être enregistrées dans {0}.",
-						NomFichierPhilatélie);
-				}
+				//}
+				//catch
+				//{
+				//	AvertirCritique(
+				//		"***** ERREUR *****\n" +
+				//		"Les données n'ont pas pu être enregistrées dans {0}.",
+				//		NomFichierPhilatélie);
+				//}
 			}
 		}
 
@@ -110,6 +112,7 @@ namespace Philatel
 					formateur.Binder = new LierAssemblagesSimplement();
 					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
 					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
+					m_commandesAnnulables = (Stack<ICommande>)formateur.Deserialize(ficArticles);
 				}
 			}
 			catch (FileNotFoundException)
@@ -126,8 +129,10 @@ namespace Philatel
 				var formateur = new BinaryFormatter();
 				formateur.Serialize(ficArticles, m_articles);
 				formateur.Serialize(ficArticles, m_noProchainArticle);
+				formateur.Serialize(ficArticles, m_commandesAnnulables);
 			}
 		}
+
 
 		/// <summary>
 		/// Renvoie un accès (en lecture seule) à tous les articles (sans ordre particulier).
@@ -184,13 +189,14 @@ namespace Philatel
 				}
 			}
 
-			foreach(ArticlePhilatélique article in tempStack)
+			foreach (ArticlePhilatélique article in tempStack)
 			{
 				m_articles.Push(article);
 			}
 			m_docModifié = true;
 			Notifier(this);
 		}
+
 
 		/// <summary>
 		/// Retire un article des articles conservés.
@@ -219,5 +225,27 @@ namespace Philatel
 			Notifier(this);
 			return true;
 		}
+
+		/**
+		 * Numero D : A revoir avec le prof, je suis pas sur si on peut sortir
+		 * la logique de la forme principal et la mettre ici mais sa fait du sens 
+		 * car selon moi le document devrais gerer la liste de commande qui ont ete 
+		 * effectuer. A revoir.
+		 */
+
+		internal bool AucuneCommandeAnnulable() => m_commandesAnnulables.Count == 0;
+
+		internal bool AucuneCommandeRetablissante() => m_commandesRétablissante.Count == 0;
+
+		internal ICommande RetirerCommandeRétablissante() => m_commandesRétablissante.Pop();
+
+		internal ICommande RetirerCommandeAnnulable() => m_commandesAnnulables.Pop();
+
+		internal void PousserCommandeRétablissante(ICommande commande) => m_commandesRétablissante.Push(commande);
+
+		internal void ViderCommandeRétablissante() => m_commandesRétablissante.Clear();
+
+		internal void PousserCommandeAnnulable(ICommande commande) => m_commandesAnnulables.Push(commande);
+
 	}
 }

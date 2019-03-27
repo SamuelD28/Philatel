@@ -27,8 +27,6 @@ namespace Philatel
 
         Document m_doc = Document.Instance;
         ArticlePhilatélique m_articleCourant = null;
-        Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Z
-        Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Y
 
         public void MettreÀJour(Document p_sujet)
         {
@@ -81,9 +79,9 @@ namespace Philatel
 
         private void ActiverDésactiverMenus(object sender, EventArgs e)
         {
-            opérationsAnnulerToolStripMenuItem.Enabled = m_commandesAnnulables.Count != 0;
+            opérationsAnnulerToolStripMenuItem.Enabled = !m_doc.AucuneCommandeAnnulable();
             bool actif = m_articleCourant != null;
-			Rétablir_Btn.Enabled = (m_commandesRétablissante.Count > 0);
+			Rétablir_Btn.Enabled = (!m_doc.AucuneCommandeRetablissante());
             opérationsModifierToolStripMenuItem.Enabled = actif;
             opérationsSupprimerToolStripMenuItem.Enabled = actif;
         }
@@ -97,16 +95,16 @@ namespace Philatel
 
             if (commande.Exécuter())
 			{
-                m_commandesAnnulables.Push(commande);
-				m_commandesRétablissante.Clear();
+				m_doc.PousserCommandeAnnulable(commande);
+				m_doc.ViderCommandeRétablissante();
 			}
         }
 
         private void opérationsAnnulerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ICommande commandeAnnuler = m_commandesAnnulables.Pop();
+			ICommande commandeAnnuler = m_doc.RetirerCommandeAnnulable();
             commandeAnnuler.Annuler();
-			m_commandesRétablissante.Push(commandeAnnuler);
+			m_doc.PousserCommandeRétablissante(commandeAnnuler);
         }
 
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
@@ -116,8 +114,8 @@ namespace Philatel
 
             if (commande.Exécuter())
 			{
-                m_commandesAnnulables.Push(commande);
-				m_commandesRétablissante.Clear();
+				m_doc.PousserCommandeAnnulable(commande);
+				m_doc.ViderCommandeRétablissante();
 			}
          }
 
@@ -128,8 +126,8 @@ namespace Philatel
 
             if (commande.Exécuter())
 			{
-                m_commandesAnnulables.Push(commande);
-				m_commandesRétablissante.Clear();
+				m_doc.PousserCommandeAnnulable(commande);
+				m_doc.ViderCommandeRétablissante();
 			}
         }
 
@@ -169,10 +167,10 @@ namespace Philatel
 		{
 
 			//Numero C : A revoir
-			if(m_commandesRétablissante.Count > 0){
-				ICommande commandeRétablissante = m_commandesRétablissante.Pop();
+			if(!m_doc.AucuneCommandeRetablissante()){
+				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
 				commandeRétablissante.Rétablir();
-				m_commandesAnnulables.Push(commandeRétablissante);
+				m_doc.PousserCommandeAnnulable(commandeRétablissante);
 			}
 		}
 	}
