@@ -14,6 +14,7 @@ namespace Philatel
     {
         bool Exécuter();
         void Annuler();
+		void Rétablir();
         // ICommande Cloner();  // Pas utile dans cette version
     }
 
@@ -24,6 +25,7 @@ namespace Philatel
     public abstract class CommandeAjout : ICommande
     {
         int m_numéroArticleAjouté;
+		ArticlePhilatélique m_article;
 
         public bool Exécuter() // Template Method (appelle une Factory Method)
         {
@@ -32,18 +34,22 @@ namespace Philatel
             if (d.ShowDialog() == DialogResult.Cancel)
                 return false;
 
-            ArticlePhilatélique article = d.Extraire();
-            m_numéroArticleAjouté = article.Numéro;
+            m_article = d.Extraire();
+            m_numéroArticleAjouté = m_article.Numéro;
 
-            Document.Instance.Ajouter(article);
+            Document.Instance.Ajouter(m_article);
             return true;
         }
 
-        public void Annuler()
-            => Document.Instance.RetirerArticle(m_numéroArticleAjouté);
+        public void Annuler() => Document.Instance.RetirerArticle(m_numéroArticleAjouté);
 
         public abstract DlgSaisieArticle CréerDlgSaisie();  // Factory Method
-    }
+
+		public void Rétablir()
+		{
+			Document.Instance.Ajouter(m_article);
+		}
+	}
 
     /// Classe abstraite CommandeModification : 
     /// <summary>
@@ -77,7 +83,12 @@ namespace Philatel
         }
 
         public abstract DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article);  // Factory Method
-    }
+
+		public void Rétablir()
+		{
+			throw new NotImplementedException();
+		}
+	}
 
     /// Classe CommandeSuppression :
     /// <summary>
@@ -102,8 +113,7 @@ namespace Philatel
             return true;
         }
 
-        public void Annuler()
-            =>  Document.Instance.Ajouter(m_article);
+        public void Annuler() => Document.Instance.Ajouter(m_article);
 
         public virtual bool ConfirmerSuppression(ArticlePhilatélique p_article)
         {
@@ -111,5 +121,10 @@ namespace Philatel
                                    p_article.ToString() +
                                    "\n\n?");
         }
-    }
+
+		public void Rétablir()
+		{
+			Document.Instance.RetirerArticle(m_article.Numéro);
+		}
+	}
 }

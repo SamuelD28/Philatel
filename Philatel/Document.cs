@@ -207,6 +207,7 @@ namespace Philatel
 		{
 			Stack<ArticlePhilatélique> tempStack = new Stack<ArticlePhilatélique>();
 
+			//Numero A : A revoir
 			foreach (ArticlePhilatélique article in m_articles)
 			{
 				if (article.Numéro != p_noArticle)

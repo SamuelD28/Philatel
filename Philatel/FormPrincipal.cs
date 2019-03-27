@@ -28,6 +28,7 @@ namespace Philatel
         Document m_doc = Document.Instance;
         ArticlePhilatélique m_articleCourant = null;
         Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Z
+        Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Y
 
         public void MettreÀJour(Document p_sujet)
         {
@@ -46,14 +47,11 @@ namespace Philatel
             listViewArticles_SelectedIndexChanged(null, null);
         }
 
-        private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e)
-            => new DlgÀPropos().ShowDialog();
+        private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e) => new DlgÀPropos().ShowDialog();
 
-        private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e)
-            => Close();
+        private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e) => Close();
 
-        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
-            => m_doc.Fermer();
+        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e) => m_doc.Fermer();
 
         private void listViewArticles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -84,9 +82,8 @@ namespace Philatel
         private void ActiverDésactiverMenus(object sender, EventArgs e)
         {
             opérationsAnnulerToolStripMenuItem.Enabled = m_commandesAnnulables.Count != 0;
-
             bool actif = m_articleCourant != null;
-
+			Rétablir_Btn.Enabled = (m_commandesRétablissante.Count > 0);
             opérationsModifierToolStripMenuItem.Enabled = actif;
             opérationsSupprimerToolStripMenuItem.Enabled = actif;
         }
@@ -95,6 +92,7 @@ namespace Philatel
         {
             var commandeAnnuler = m_commandesAnnulables.Pop();
             commandeAnnuler.Annuler();
+			m_commandesRétablissante.Push(commandeAnnuler);
         }
 
         public void OpérationsAjouter(object p_sender, EventArgs p_e)
@@ -131,16 +129,12 @@ namespace Philatel
                     " : Paresse ! (il faudrait tout afficher, sauf le numéro, interne)");
         }// J'aurais pu mettre « => », mais je continue la règle « plus qu'une ligne == bloc ».
 
-
         // On aurait pu associer directement ces trois événements aux fonctions déjà existantes...
-        private void buttonModifier_Click(object sender, EventArgs e)
-            => opérationsModifierToolStripMenuItem_Click(sender, e);
+        private void buttonModifier_Click(object sender, EventArgs e) => opérationsModifierToolStripMenuItem_Click(sender, e);
         
-        private void buttonSupprimer_Click(object sender, EventArgs e)
-            => opérationsSupprimerToolStripMenuItem_Click(sender, e);
+        private void buttonSupprimer_Click(object sender, EventArgs e) => opérationsSupprimerToolStripMenuItem_Click(sender, e);
 
-        private void listViewArticles_DoubleClick(object sender, EventArgs e)
-            => buttonModifier_Click(sender, e);  // Ou ... afficher ...
+        private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e);  // Ou ... afficher ...
 
         // Cette méthode est ajoutée pour que les raccourcis clavier soient actifs ou pas, correctement.
         // Dans les premières versions de .NET (et dans les MFC, et peut-être ailleurs), les raccourcis
@@ -160,5 +154,14 @@ namespace Philatel
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-    }
+
+		private void Rétablir_Btn_Click(object sender, EventArgs e)
+		{
+			if(m_commandesRétablissante.Count > 0){
+				ICommande commandeRétablissante = m_commandesRétablissante.Pop();
+				commandeRétablissante.Rétablir();
+				m_commandesAnnulables.Push(commandeRétablissante);
+			}
+		}
+	}
 }
