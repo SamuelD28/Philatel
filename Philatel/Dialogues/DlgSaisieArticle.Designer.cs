@@ -37,6 +37,8 @@
             this.textBoxMotif = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxMotifs = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxTailleEtForme = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +53,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 47);
+            this.label2.Location = new System.Drawing.Point(13, 73);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 13);
             this.label2.TabIndex = 2;
@@ -60,7 +62,7 @@
             // dateTimeParution
             // 
             this.dateTimeParution.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimeParution.Location = new System.Drawing.Point(110, 44);
+            this.dateTimeParution.Location = new System.Drawing.Point(111, 70);
             this.dateTimeParution.Name = "dateTimeParution";
             this.dateTimeParution.ShowCheckBox = true;
             this.dateTimeParution.Size = new System.Drawing.Size(119, 20);
@@ -69,7 +71,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 73);
+            this.label3.Location = new System.Drawing.Point(13, 99);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 4;
@@ -77,7 +79,7 @@
             // 
             // textBoxPrixPayé
             // 
-            this.textBoxPrixPayé.Location = new System.Drawing.Point(74, 70);
+            this.textBoxPrixPayé.Location = new System.Drawing.Point(75, 96);
             this.textBoxPrixPayé.Name = "textBoxPrixPayé";
             this.textBoxPrixPayé.Size = new System.Drawing.Size(66, 20);
             this.textBoxPrixPayé.TabIndex = 5;
@@ -85,7 +87,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(142, 73);
+            this.label4.Location = new System.Drawing.Point(143, 99);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(13, 13);
             this.label4.TabIndex = 6;
@@ -115,11 +117,29 @@
             this.comboBoxMotifs.Size = new System.Drawing.Size(121, 21);
             this.comboBoxMotifs.TabIndex = 1002;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 46);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 13);
+            this.label6.TabIndex = 1003;
+            this.label6.Text = "Taille et &forme :";
+            // 
+            // textBoxTailleEtForme
+            // 
+            this.textBoxTailleEtForme.Location = new System.Drawing.Point(97, 44);
+            this.textBoxTailleEtForme.Name = "textBoxTailleEtForme";
+            this.textBoxTailleEtForme.Size = new System.Drawing.Size(182, 20);
+            this.textBoxTailleEtForme.TabIndex = 1004;
+            // 
             // DlgSaisieArticle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 146);
+            this.ClientSize = new System.Drawing.Size(372, 179);
+            this.Controls.Add(this.textBoxTailleEtForme);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.comboBoxMotifs);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
@@ -140,6 +160,8 @@
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.comboBoxMotifs, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
+            this.Controls.SetChildIndex(this.textBoxTailleEtForme, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,5 +178,7 @@
         private System.Windows.Forms.TextBox textBoxMotif;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxMotifs;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBoxTailleEtForme;
     }
 }

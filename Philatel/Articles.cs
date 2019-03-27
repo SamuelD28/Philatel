@@ -55,9 +55,9 @@ namespace Philatel
     [Serializable]
     public class TimbreSeul : ArticlePhilatélique
     {
-        public TimbreSeul(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé,
-                          double p_valeurTimbre, Oblitération p_oblitération)
-            : base(p_numéro, p_motif, p_parution, p_prixPayé)
+        public TimbreSeul(int p_numéro, string p_motif, string p_tailleEtForme, DateTime? p_parution,
+                          double p_valeurTimbre, Oblitération p_oblitération, double? p_prixPayé)
+            : base(p_numéro, p_motif, p_tailleEtForme, p_parution, p_prixPayé)
         {
             ValeurTimbre = p_valeurTimbre;
             Oblitération = p_oblitération;
@@ -78,9 +78,9 @@ namespace Philatel
     [Serializable]
     public class BlocDeCoin : ArticlePhilatélique
     {
-        public BlocDeCoin(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé,
-                          Coin p_coin, double p_valeurTimbre, int p_nbTimbres)
-            : base(p_numéro, p_motif, p_parution, p_prixPayé)
+        public BlocDeCoin(int p_numéro, string p_motif, string p_tailleEtForme, DateTime? p_parution,
+                          Coin p_coin, double p_valeurTimbre, int p_nbTimbres, double? p_prixPayé)
+            : base(p_numéro, p_motif, p_tailleEtForme, p_parution, p_prixPayé)
         {
             Coin = p_coin;
             ValeurTimbre = p_valeurTimbre;

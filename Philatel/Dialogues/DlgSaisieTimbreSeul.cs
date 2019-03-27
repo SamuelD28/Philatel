@@ -33,14 +33,14 @@ namespace Philatel
             }
         }
 
-        public override bool FinirValidation(string p_motif, DateTime? p_parution, double p_prixPayé)
+        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             double valeurTimbre = DoubleAvecMinimum(textBoxValeurTimbre, 0.01, "Valeur du timbre");
             Oblitération oblitération = checkBoxOblitéré.Checked ? Oblitération.Normale : Oblitération.Aucune;
 
             Article = new TimbreSeul(
                 (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(),
-                p_motif, p_parution, p_prixPayé, valeurTimbre, oblitération);
+                p_motif, p_tailleEtForme, p_parution, valeurTimbre, oblitération, p_prixPayé);
             return true;
         }
     }

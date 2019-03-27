@@ -11,10 +11,10 @@ namespace AP_PNC
 	[Serializable]
 	public class PlancheNonCoupée : ArticlePhilatélique
 	{
-		public PlancheNonCoupée(int p_numéro, string p_motif, DateTime? p_parution,
-			double p_prixPayé, int p_nombreTimbres, double p_valeurPlanche, int p_nombreTimbreDifférent,
-			string p_nomDesigner, int p_nombreLigne, int p_nombreColonne)
-			: base(p_numéro, p_motif, p_parution, p_prixPayé)
+		public PlancheNonCoupée(int p_numéro, string p_motif, string p_tailleEtForme, DateTime? p_parution,
+            int p_nombreTimbres, double p_valeurPlanche, int p_nombreTimbreDifférent,
+			string p_nomDesigner, int p_nombreLigne, int p_nombreColonne, double? p_prixPayé)
+			: base(p_numéro, p_motif, p_tailleEtForme, p_parution, p_prixPayé)
 		{
 			ValeurPlanche = p_valeurPlanche;
 			NombreTimbre = p_nombreTimbres;
