@@ -32,6 +32,12 @@ namespace Philatel
 
             Article = p_article;
 
+            comboBoxMotifs.Items.Clear();
+            foreach (string motif in ArticlePhilatélique.TousLesMotifs)
+            {
+                comboBoxMotifs.Items.Add(motif);
+            }
+
             if (Article != null)
                 InitialiserLesChamps();
 
@@ -39,14 +45,16 @@ namespace Philatel
                 DésactiverLesChamps();
         }
 
-        protected ArticlePhilatélique Article  { get; set; }
+        protected ArticlePhilatélique Article { get; set; }
 
         public ArticlePhilatélique Extraire()
             => Article;
 
         private void InitialiserLesChamps()
         {
-            textBoxMotif.Text = Article.Motif;
+            comboBoxMotifs.SelectedIndex = comboBoxMotifs.FindStringExact(Article.Motif);
+
+            textBoxMotif.Text = null;
 
             if (Article.Parution.HasValue)
             {
@@ -71,10 +79,34 @@ namespace Philatel
 
         protected override bool ChampsValides() // Appelé d'un template method, mais est aussi un TM !
         {
-            string motif = StringNonVide(textBoxMotif, "Motif");
+            string motif;
+
+            if (string.IsNullOrEmpty(textBoxMotif.Text) && comboBoxMotifs.SelectedIndex == -1)
+            {
+                MB.Avertir("Choisir une option de motif ou en saisir un nouveau");
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(textBoxMotif.Text))
+            {
+                motif = textBoxMotif.Text;
+                // TODO Need some Decheezifying 
+                ArticlePhilatélique.TousLesMotifs.Add(motif);
+            }
+
+            else
+            {
+                motif = comboBoxMotifs.SelectedItem.ToString();
+            }
+            
+
+            //string motif = StringNonVide(textBoxMotif, "Motif");
             DateTime? parution = dateTimeParution.Checked ? dateTimeParution.Value : (DateTime?)null;
             double prixPayé = DoubleAvecMinimum(textBoxPrixPayé, 0.0, "Prix payé");
             // S'il y en avait beaucoup, il faudrait probablement créer un BaseDeArticlePhilatélique
+
+            //string motif = comboBoxMotifs.SelectedIndex.ToString();
+
 
             return FinirValidation(motif, parution, prixPayé); // TM...
         }

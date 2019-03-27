@@ -145,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(255, 284);
+            this.ClientSize = new System.Drawing.Size(366, 284);
             this.Controls.Add(this.groupBoxCoins);
             this.Controls.Add(this.textBoxNombreTimbres);
             this.Controls.Add(this.label7);

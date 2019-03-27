@@ -9,6 +9,8 @@ namespace Philatel
     [Serializable]
     public abstract class ArticlePhilatélique
     {
+        public static List<string> TousLesMotifs = new List<string>() {"Fleurie", "Paysage", "Monument" };
+
         public ArticlePhilatélique(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé)
         {
             Numéro = p_numéro;

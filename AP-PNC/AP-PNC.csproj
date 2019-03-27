@@ -32,14 +32,25 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UtilStJ">
+      <HintPath>..\UtilStJ.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DlgSaisiePNC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgSaisiePNC.Designer.cs">
+      <DependentUpon>DlgSaisiePNC.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlancheNonCoupée.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +59,11 @@
       <Project>{f3c471fe-6cb4-4b4f-9fb5-7b72aea76f9d}</Project>
       <Name>Philatel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DlgSaisiePNC.resx">
+      <DependentUpon>DlgSaisiePNC.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

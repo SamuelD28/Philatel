@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBoxMotif = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimeParution = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxPrixPayé = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBoxMotif = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBoxMotifs = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -46,17 +48,10 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "&Motif :";
             // 
-            // textBoxMotif
-            // 
-            this.textBoxMotif.Location = new System.Drawing.Point(55, 12);
-            this.textBoxMotif.Name = "textBoxMotif";
-            this.textBoxMotif.Size = new System.Drawing.Size(175, 20);
-            this.textBoxMotif.TabIndex = 1;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 41);
+            this.label2.Location = new System.Drawing.Point(12, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 13);
             this.label2.TabIndex = 2;
@@ -65,7 +60,7 @@
             // dateTimeParution
             // 
             this.dateTimeParution.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimeParution.Location = new System.Drawing.Point(111, 38);
+            this.dateTimeParution.Location = new System.Drawing.Point(110, 44);
             this.dateTimeParution.Name = "dateTimeParution";
             this.dateTimeParution.ShowCheckBox = true;
             this.dateTimeParution.Size = new System.Drawing.Size(119, 20);
@@ -74,7 +69,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 67);
+            this.label3.Location = new System.Drawing.Point(12, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 4;
@@ -82,7 +77,7 @@
             // 
             // textBoxPrixPayé
             // 
-            this.textBoxPrixPayé.Location = new System.Drawing.Point(75, 64);
+            this.textBoxPrixPayé.Location = new System.Drawing.Point(74, 70);
             this.textBoxPrixPayé.Name = "textBoxPrixPayé";
             this.textBoxPrixPayé.Size = new System.Drawing.Size(66, 20);
             this.textBoxPrixPayé.TabIndex = 5;
@@ -90,17 +85,43 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(143, 67);
+            this.label4.Location = new System.Drawing.Point(142, 73);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(13, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "$";
             // 
+            // textBoxMotif
+            // 
+            this.textBoxMotif.Location = new System.Drawing.Point(252, 13);
+            this.textBoxMotif.Name = "textBoxMotif";
+            this.textBoxMotif.Size = new System.Drawing.Size(108, 20);
+            this.textBoxMotif.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(187, 15);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 1001;
+            this.label5.Text = "&Nouveau : ";
+            // 
+            // comboBoxMotifs
+            // 
+            this.comboBoxMotifs.FormattingEnabled = true;
+            this.comboBoxMotifs.Location = new System.Drawing.Point(56, 13);
+            this.comboBoxMotifs.Name = "comboBoxMotifs";
+            this.comboBoxMotifs.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxMotifs.TabIndex = 1002;
+            // 
             // DlgSaisieArticle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(241, 142);
+            this.ClientSize = new System.Drawing.Size(372, 146);
+            this.Controls.Add(this.comboBoxMotifs);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxMotif);
             this.Controls.Add(this.label4);
@@ -117,6 +138,8 @@
             this.Controls.SetChildIndex(this.label4, 0);
             this.Controls.SetChildIndex(this.textBoxMotif, 0);
             this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.comboBoxMotifs, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,11 +148,13 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxMotif;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateTimeParution;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxPrixPayé;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxMotif;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBoxMotifs;
     }
 }

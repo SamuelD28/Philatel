@@ -17,6 +17,17 @@ namespace Philatel
         // ICommande Cloner();  // Pas utile dans cette version
     }
 
+    //public class CommandeEffacerTout
+    //{
+    //    public void EffacerTout()
+    //    {
+    //        foreach (var article in Document.Instance.TousLesArticles())
+    //        {
+    //            Document.Instance.RetirerArticle(article.Numéro);
+    //        }
+    //    }
+    //}
+
     /// Classe abstraite CommandeAjout : 
     /// <summary>
     /// permet l'ajout d'un article (abstraite car on doit définir CréerDlgSaisie).
