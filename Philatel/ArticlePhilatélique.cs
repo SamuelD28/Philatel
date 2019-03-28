@@ -9,8 +9,6 @@ namespace Philatel
     [Serializable]
     public abstract class ArticlePhilatélique
     {
-        public static List<string> TousLesMotifs = new List<string>() {"Fleurie", "Paysage", "Monument" };
-
         public ArticlePhilatélique(int p_numéro, string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             Numéro = p_numéro;
@@ -20,9 +18,9 @@ namespace Philatel
             PrixPayé = p_prixPayé;
         }
 
-        public int Numéro  { get; }
+        public int Numéro { get; }
         public string Motif { get; }
-        public DateTime? Parution  { get; }
+        public DateTime? Parution { get; }
         public string TailleEtForme { get; }
         public double? PrixPayé { get; }
 

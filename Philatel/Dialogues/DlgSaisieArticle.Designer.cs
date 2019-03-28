@@ -38,7 +38,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxMotifs = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxTailleEtForme = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -126,19 +126,19 @@
             this.label6.TabIndex = 3001;
             this.label6.Text = "Taille et &forme :";
             // 
-            // textBox1
+            // textBoxTailleEtForme
             // 
-            this.textBox1.Location = new System.Drawing.Point(97, 44);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(182, 20);
-            this.textBox1.TabIndex = 3002;
+            this.textBoxTailleEtForme.Location = new System.Drawing.Point(97, 44);
+            this.textBoxTailleEtForme.Name = "textBoxTailleEtForme";
+            this.textBoxTailleEtForme.Size = new System.Drawing.Size(182, 20);
+            this.textBoxTailleEtForme.TabIndex = 3002;
             // 
             // DlgSaisieArticle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(372, 179);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxTailleEtForme);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.comboBoxMotifs);
             this.Controls.Add(this.label5);
@@ -161,7 +161,7 @@
             this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.comboBoxMotifs, 0);
             this.Controls.SetChildIndex(this.label6, 0);
-            this.Controls.SetChildIndex(this.textBox1, 0);
+            this.Controls.SetChildIndex(this.textBoxTailleEtForme, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,6 +179,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxMotifs;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxTailleEtForme;
     }
 }

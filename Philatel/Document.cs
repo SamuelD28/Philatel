@@ -17,6 +17,7 @@ namespace Philatel
 		public const string NomFichierPhilatélie = "Philatélie.données";
 		public const int NoPremierArticle = 1;
 		public static Document Instance => m_docUnique.Value;
+        public static IEnumerable<string> ObtenirTousLesMotifs => m_tousLesMotifs;
 
 		//Propriétés privés
 		private static GestionCommandes Commandes => GestionCommandes.GetInstance();
@@ -24,11 +25,15 @@ namespace Philatel
 		private Stack<ArticlePhilatélique> m_articles;
 		private int m_noProchainArticle;
 		private bool m_docModifié = false;
+        private static ICollection<string> m_tousLesMotifs = new List<string>() { "Fleurie", "Paysage", "Monument" };
 
-		/// <summary>
-		/// Constructeur privée utilisé par la classe singleton
-		/// </summary>
-		private Document()
+        public static void AjouterMotif(string p_motif)
+            => m_tousLesMotifs.Add(p_motif);
+
+        /// <summary>
+        /// Constructeur privée utilisé par la classe singleton
+        /// </summary>
+        private Document()
 		{
 			try
 			{
@@ -87,6 +92,7 @@ namespace Philatel
 					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
 					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
 					Commandes.InitialiserAnnulables((Stack<ICommande>)formateur.Deserialize(ficArticles));
+                    m_tousLesMotifs = (ICollection<string>)formateur.Deserialize(ficArticles);
 				}
 			}
 			catch (FileNotFoundException)
@@ -107,6 +113,7 @@ namespace Philatel
 				formateur.Serialize(ficArticles, m_articles);
 				formateur.Serialize(ficArticles, m_noProchainArticle);
 				formateur.Serialize(ficArticles, Commandes.Annulables);
+				formateur.Serialize(ficArticles, m_tousLesMotifs);
 			}
 		}
 
@@ -115,10 +122,10 @@ namespace Philatel
 		/// </summary>
 		private void DataSeed()
 		{
-			ArticlePhilatélique article1 = new TimbreSeul(3, "fleurie", "Large", DateTime.Now, 5.99, Oblitération.Aucune, 15.99);
-			ArticlePhilatélique article2 = new BlocDeCoin(4, "paysage", "Large", DateTime.Now, Coin.InférieurDroit, 11.25, 12, 35.25);
-			ArticlePhilatélique article3 = new TimbreSeul(5, "monument", "Large", DateTime.Now, 2.99, Oblitération.Normale, 7.99);
-			ArticlePhilatélique article4 = new BlocDeCoin(6, "paysage", "Large", DateTime.Now, Coin.SupérieurDroit, 7.88, 9, 49.99);
+			ArticlePhilatélique article1 = new TimbreSeul(3, "Fleurie", "Large", DateTime.Now, 5.99, Oblitération.Aucune, 15.99);
+			ArticlePhilatélique article2 = new BlocDeCoin(4, "Paysage", "Large", DateTime.Now, Coin.InférieurDroit, 11.25, 12, 35.25);
+			ArticlePhilatélique article3 = new TimbreSeul(5, "Monument", "Large", DateTime.Now, 2.99, Oblitération.Normale, 7.99);
+			ArticlePhilatélique article4 = new BlocDeCoin(6, "Paysage", "Large", DateTime.Now, Coin.SupérieurDroit, 7.88, 9, 49.99);
 
 			m_articles.Push(article1);
 			m_articles.Push(article2);
