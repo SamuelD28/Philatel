@@ -125,10 +125,27 @@ namespace Philatel
 
 		public void CompléterLeMenu(ToolStripMenuItem p_menu, EventHandler p_eh) 
 		{
+			List<string> raccourcisDescription = new List<string>();
+
 			foreach (IFabriqueCommande fab in LesFabriques.GetInstance())
 			{
-				var tsi = new ToolStripMenuItem(fab.DescriptionPourMenu(), null, p_eh);
-				tsi.Tag = fab; // .Key est l'identificateur, donc .Value est la fabrique
+				bool raccourciTrouver = false;
+				string raccourciReconstituer = "";
+				foreach (string mot in fab.DescriptionDuType.Split(' '))
+				{
+					if (raccourcisDescription.FindIndex(s => s.ToLower().StartsWith("9" + char.ToLower(mot[0]))) == -1 
+						&& !raccourciTrouver)
+					{
+						raccourciReconstituer += "9" + mot + " ";
+						raccourciTrouver = true;
+					}
+					else
+						raccourciReconstituer += mot + " ";
+				}
+				raccourcisDescription.Add(raccourciReconstituer);
+
+				var tsi = new ToolStripMenuItem("&" + fab.DescriptionDuType, null, p_eh);
+				tsi.Tag = fab; 
 				p_menu.DropDownItems.Add(tsi);
 			}
 		}

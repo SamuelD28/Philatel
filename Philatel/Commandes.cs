@@ -32,6 +32,7 @@ namespace Philatel
 				GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
 				GestionCommandes.GetInstance().ViderCommandeRétablissante();
 				Document.Instance.Vider();
+				Document.Instance.Enregistrer();
 				return true;
 			}
 			catch
@@ -72,6 +73,7 @@ namespace Philatel
 			GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
 			GestionCommandes.GetInstance().ViderCommandeRétablissante();
 			Document.Instance.Ajouter(m_article);
+			Document.Instance.Enregistrer();
 			return true;
 		}
 
@@ -113,6 +115,7 @@ namespace Philatel
 			GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
 			GestionCommandes.GetInstance().ViderCommandeRétablissante();
 			Document.Instance.Modifier(m_articleModifier);
+			Document.Instance.Enregistrer();
 			return true;
 		}
 
@@ -153,6 +156,7 @@ namespace Philatel
 			GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
 			GestionCommandes.GetInstance().ViderCommandeRétablissante();
 			Document.Instance.RetirerArticle(m_article.Numéro);
+			Document.Instance.Enregistrer();
 			return true;
 		}
 

@@ -25,9 +25,11 @@ namespace Philatel
 
 		private static LesFabriques Instance = null;
 
-		private LesFabriques(){}
+		private LesFabriques(){
+			m_fabriques = new Dictionary<Type, IFabriqueCommande>();
+		}
 
-        private Dictionary<Type, IFabriqueCommande> m_fabriques = new Dictionary<Type, IFabriqueCommande>();
+        private Dictionary<Type, IFabriqueCommande> m_fabriques;
 
         public void Ajouter(Type p_typeArticle, IFabriqueCommande p_fabrique) => m_fabriques.Add(p_typeArticle, p_fabrique);
 
@@ -35,11 +37,11 @@ namespace Philatel
 
 		public IEnumerator<IFabriqueCommande> GetEnumerator() => new LesFrabriquesEnumerator(m_fabriques);
 
-		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); //Pourquoi implementer sa?
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); 
 
 		private class LesFrabriquesEnumerator : IEnumerator<IFabriqueCommande>
 		{
-			private IFabriqueCommande[] m_fabriquesCommandes { get; }
+			private IFabriqueCommande[] FabriqueCommandes { get; }
 			private int CursorPosition { get; set; }
 			private int Count { get; }
 
@@ -47,15 +49,16 @@ namespace Philatel
 			{
 				CursorPosition = -1;
 				Count = fabriqueCommandes.Count;
-				m_fabriquesCommandes = new IFabriqueCommande[Count];
-				fabriqueCommandes.Values.CopyTo(m_fabriquesCommandes, 0);
 
-				Array.Sort(m_fabriquesCommandes, new ComparateurAlphabétique());
+				FabriqueCommandes = new IFabriqueCommande[Count];
+				fabriqueCommandes.Values.CopyTo(FabriqueCommandes, 0);
+
+				Array.Sort(FabriqueCommandes, new ComparateurAlphabétique());
 			}
 
-			public IFabriqueCommande Current => m_fabriquesCommandes[CursorPosition];
+			public IFabriqueCommande Current => FabriqueCommandes[CursorPosition];
 
-			object IEnumerator.Current => m_fabriquesCommandes[CursorPosition];
+			object IEnumerator.Current => FabriqueCommandes[CursorPosition];
 
 			public void Dispose()
 			{
@@ -75,7 +78,7 @@ namespace Philatel
 		{
 			public int Compare(IFabriqueCommande x, IFabriqueCommande y)
 			{
-				return x.DescriptionPourMenu().CompareTo(y.DescriptionPourMenu());
+				return x.DescriptionDuType.CompareTo(y.DescriptionDuType);
 			}
 		}
 	}
@@ -85,8 +88,7 @@ namespace Philatel
     /// </summary>
     public interface IFabriqueCommande
     {
-        string DescriptionPourMenu();
-
+        string DescriptionDuType { get; }
         ICommande CréerCommandeAjouter();
         ICommande CréerCommandeModifier(ArticlePhilatélique p_article);
         ICommande CréerCommandeSupprimer(ArticlePhilatélique p_article);

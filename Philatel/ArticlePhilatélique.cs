@@ -41,31 +41,6 @@ namespace Philatel
                    $"Payé {PrixPayé:C}";                                   // Payé 2,27 $
         }
 
-		public override int GetHashCode()
-		{
-			return	Numéro * 7 +
-					Motif.Length * 11 +
-					Parution.Value.DayOfYear * 17 +
-					(int)PrixPayé * 23;
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (obj is null)
-				return false;
-
-			if(obj is ArticlePhilatélique)
-			{
-				ArticlePhilatélique temp = (ArticlePhilatélique)obj;
-				return	temp.Numéro == Numéro && 
-						temp.Motif == Motif && 
-						temp.Parution == Parution && 
-						temp.PrixPayé == PrixPayé;
-			}
-
-			return false ;
-		}
-
 		public abstract string Description();
         public abstract string Catégorie { get; }
         public abstract string ValeurNominale();

@@ -42,6 +42,7 @@ namespace AP_PNC
 	{
 		public static FabriquePNC InstanceFabrique { get; } = new FabriquePNC();
 
+
 		private FabriquePNC() { }
 
 		public ICommande CréerCommandeAjouter() => new CommandeAjoutPNC();
@@ -50,7 +51,7 @@ namespace AP_PNC
 		
 		public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_article) => new CommandeSuppression(p_article);
 
-		public string DescriptionPourMenu() => "Planche non coupée (PNC)";
+		public string DescriptionDuType => "Planche non coupée (PNC)";
 	}
 
 	[Serializable]

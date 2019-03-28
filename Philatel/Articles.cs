@@ -111,11 +111,10 @@ namespace Philatel
         // Singleton :
         public static FabriqueTimbreSeul Instance { get; } = new FabriqueTimbreSeul();
 
-        private FabriqueTimbreSeul()
-        { }
+		public string DescriptionDuType =>"Timbre seul";
 
-        public string DescriptionPourMenu()
-            => "Timbre seul";
+		private FabriqueTimbreSeul()
+        { }
 
         public ICommande CréerCommandeAjouter()
             => new CommandeAjoutTS();
@@ -132,13 +131,12 @@ namespace Philatel
         // Singleton :
         public static FabriqueBlocDeCoin Instance { get; } = new FabriqueBlocDeCoin();
 
-        private FabriqueBlocDeCoin()
+		private FabriqueBlocDeCoin()
         { }
 
-        public string DescriptionPourMenu()
-            => "Bloc de coin";
+		string IFabriqueCommande.DescriptionDuType => "Bloc en coin";
 
-        public ICommande CréerCommandeAjouter()
+		public ICommande CréerCommandeAjouter()
             => new CommandeAjoutBC();
 
         public ICommande CréerCommandeModifier(ArticlePhilatélique p_articleCourant)

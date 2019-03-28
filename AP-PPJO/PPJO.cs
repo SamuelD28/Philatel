@@ -42,10 +42,10 @@ namespace PhilatelPPJO
         // Singleton :
         public static FabriquePPJO InstanceFabrique { get; } = new FabriquePPJO();
 
-        private FabriquePPJO()
+		private FabriquePPJO()
         { }
 
-        public string DescriptionPourMenu()=> "Pli premier jour officiel (PPJO)";
+		public string DescriptionDuType => "Pli premier jour officiel (PPJO)";
 
         public ICommande CréerCommandeAjouter()
            => new CommandeAjoutPPJO();

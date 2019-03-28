@@ -99,7 +99,7 @@ namespace Philatel
 		/// <summary>
 		/// Méthode permettant d'enregistrer les données du document dans un fichier
 		/// </summary>
-		private void Enregistrer()
+		public void Enregistrer()
 		{
 			using (var ficArticles = File.Create(NomFichierPhilatélie))
 			{
