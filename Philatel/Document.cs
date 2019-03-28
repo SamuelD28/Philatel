@@ -116,10 +116,10 @@ namespace Philatel
 		/// </summary>
 		private void DataSeed()
 		{
-			ArticlePhilatélique article1 = new TimbreSeul(3, "fleurie", DateTime.Now, 5.99, 15.99, Oblitération.Aucune);
-			ArticlePhilatélique article2 = new BlocDeCoin(4, "paysage", DateTime.Now, 11.25, Coin.InférieurDroit, 35.25, 12);
-			ArticlePhilatélique article3 = new TimbreSeul(5, "monument", DateTime.Now, 2.99, 7.99, Oblitération.Normale);
-			ArticlePhilatélique article4 = new BlocDeCoin(6, "paysage", DateTime.Now, 7.88, Coin.SupérieurDroit, 49.99, 9);
+			ArticlePhilatélique article1 = new TimbreSeul(3, "fleurie", "Large", DateTime.Now, 5.99, Oblitération.Aucune, 15.99);
+			ArticlePhilatélique article2 = new BlocDeCoin(4, "paysage", "Large", DateTime.Now, Coin.InférieurDroit, 11.25, 12, 35.25);
+			ArticlePhilatélique article3 = new TimbreSeul(5, "monument", "Large", DateTime.Now, 2.99, Oblitération.Normale, 7.99);
+			ArticlePhilatélique article4 = new BlocDeCoin(6, "paysage", "Large", DateTime.Now, Coin.SupérieurDroit, 7.88, 9, 49.99);
 
 			m_articles.Push(article1);
 			m_articles.Push(article2);

@@ -118,7 +118,7 @@ namespace Philatel
 
 		public void Rétablir()
 		{
-			throw new NotImplementedException();
+			
 		}
 	}
 

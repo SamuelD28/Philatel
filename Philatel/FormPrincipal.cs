@@ -189,7 +189,7 @@ namespace Philatel
             ActiverDésactiverContrôlesPourLaListe();
         }
 
-        private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e);  // Ou ... afficher ...
+        private void listViewArticles_DoubleClick(object sender, EventArgs e) => buttonModifier_Click(sender, e); 
 
 		/// <summary>
 		/// Méthode qui met à jour la liste d'article
