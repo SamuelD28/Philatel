@@ -18,10 +18,9 @@ namespace Philatel
 		public const int NoPremierArticle = 1;
 		public static Document Instance => m_docUnique.Value;
 
-		//Propriétés privés : Applique le principe de plus grande restriction possible
+		//Propriétés privés
+		private static GestionCommandes Commandes => GestionCommandes.GetInstance();
 		private static Lazy<Document> m_docUnique = new Lazy<Document>(() => new Document());
-		private Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();
-		private Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();
 		private Stack<ArticlePhilatélique> m_articles;
 		private int m_noProchainArticle;
 		private bool m_docModifié = false;
@@ -49,7 +48,6 @@ namespace Philatel
 				Environment.Exit(0);  // Permet d'arrêter le programme directement.
 			}
 		}
-
 
 		/*Méthode sur le manipulation du document et ses données*/
 
@@ -88,7 +86,7 @@ namespace Philatel
 					formateur.Binder = new LierAssemblagesSimplement();
 					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
 					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
-					m_commandesAnnulables = (Stack<ICommande>)formateur.Deserialize(ficArticles);
+					Commandes.InitialiserAnnulables((Stack<ICommande>)formateur.Deserialize(ficArticles));
 				}
 			}
 			catch (FileNotFoundException)
@@ -108,7 +106,7 @@ namespace Philatel
 				var formateur = new BinaryFormatter();
 				formateur.Serialize(ficArticles, m_articles);
 				formateur.Serialize(ficArticles, m_noProchainArticle);
-				formateur.Serialize(ficArticles, m_commandesAnnulables);
+				formateur.Serialize(ficArticles, Commandes.Annulables);
 			}
 		}
 
@@ -265,27 +263,5 @@ namespace Philatel
 		/// </summary>
 		/// <param name="articles">Liste d'article utilisé pour populé la liste courante</param>
 		public void Remplir(IEnumerable<ArticlePhilatélique> articles) => m_articles = (Stack<ArticlePhilatélique>)articles;
-
-		/**
-		 * Numero D : A revoir avec le prof, je suis pas sur si on peut sortir
-		 * la logique de la forme principal et la mettre ici mais sa fait du sens 
-		 * car selon moi le document devrais gerer la liste de commande qui ont ete 
-		 * effectuer. A revoir.
-		 */
-
-		internal bool AucuneCommandeAnnulable() => m_commandesAnnulables.Count == 0;
-
-		internal bool AucuneCommandeRetablissante() => m_commandesRétablissante.Count == 0;
-
-		internal ICommande RetirerCommandeRétablissante() => m_commandesRétablissante.Pop();
-
-		internal ICommande RetirerCommandeAnnulable() => m_commandesAnnulables.Pop();
-
-		internal void PousserCommandeRétablissante(ICommande commande) => m_commandesRétablissante.Push(commande);
-
-		internal void ViderCommandeRétablissante() => m_commandesRétablissante.Clear();
-
-		internal void PousserCommandeAnnulable(ICommande commande) => m_commandesAnnulables.Push(commande);
-
 	}
 }

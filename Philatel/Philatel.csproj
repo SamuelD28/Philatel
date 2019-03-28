@@ -64,6 +64,7 @@
     <Compile Include="Articles.cs">
     </Compile>
     <Compile Include="ArticlePhilatélique.cs" />
+    <Compile Include="GestionCommandes.cs" />
     <Compile Include="Dialogues\DlgSaisieBlocDeCoin.cs">
       <SubType>Form</SubType>
     </Compile>
