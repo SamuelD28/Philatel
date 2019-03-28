@@ -13,28 +13,32 @@ namespace Philatel
 {
 	public class Document : DocumentObservable<Document>
 	{
-		// Singleton lazy (en principe, il est inutile de le mettre « Lazy » ici, car le code
-		// ne fait pas référence au document avant que tout soit en place. Mais on voit qu'il y
-		// un risque de problème dans l'ordre du chargement et de la création des classes, à
-		// cause du chargement des dll qui doit être fait avant qu'on puisse faire la
-		// désérialisation. Ça ne réglera peut-être pas tous les problèmes futurs de mettre
-		// Lazy, mais c'est simple et ça permet de faire ressortir un peu le risque...)
-		static Lazy<Document> m_docUnique = new Lazy<Document>(() => new Document());
+		//Propriétés public
+		public const string NomFichierPhilatélie = "Philatélie.données";
+		public const int NoPremierArticle = 1;
 		public static Document Instance => m_docUnique.Value;
 
-		const string NomFichierPhilatélie = "Philatélie.données";
-		const int NoPremierArticle = 1;
-		Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Z
-		Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();  // Commandes pour le Annuler/Ctrl+Y
-		Stack<ArticlePhilatélique> m_articles;  // Ce serait peut-être mieux avec un (Sorted)Dictionary...
-		int m_noProchainArticle;
-		bool m_docModifié = false;
+		//Propriétés privés : Applique le principe de plus grande restriction possible
+		private static Lazy<Document> m_docUnique = new Lazy<Document>(() => new Document());
+		private Stack<ICommande> m_commandesAnnulables = new Stack<ICommande>();
+		private Stack<ICommande> m_commandesRétablissante = new Stack<ICommande>();
+		private Stack<ArticlePhilatélique> m_articles;
+		private int m_noProchainArticle;
+		private bool m_docModifié = false;
 
+		/// <summary>
+		/// Constructeur privée utilisé par la classe singleton
+		/// </summary>
 		private Document()
 		{
 			try
 			{
 				Récupérer();
+
+				if (m_articles.Count == 0)
+				{
+					DataSeed(); //Temporaire. Utiliser pour tester
+				}
 			}
 			catch
 			{
@@ -46,6 +50,8 @@ namespace Philatel
 			}
 		}
 
+		/*Méthode sur le manipulation du document et ses données*/
+
 		/// <summary>
 		/// Termine l'accès aux données et s'assure qu'elles sont bien enregistrées (un message est affichée
 		/// si ce n'est pas le cas).
@@ -54,20 +60,71 @@ namespace Philatel
 		{
 			if (m_docModifié)
 			{
-				//Je retirer temporairement le try-catch pour comprendre les erreurs
-				//durant lenregistrement
-				//try
-				//{
+				try
+				{
 					Enregistrer();
-				//}
-				//catch
-				//{
-				//	AvertirCritique(
-				//		"***** ERREUR *****\n" +
-				//		"Les données n'ont pas pu être enregistrées dans {0}.",
-				//		NomFichierPhilatélie);
-				//}
+				}
+				catch
+				{
+					AvertirCritique(
+						"***** ERREUR *****\n" +
+						"Les données n'ont pas pu être enregistrées dans {0}.",
+						NomFichierPhilatélie);
+				}
 			}
+		}
+
+		/// <summary>
+		/// Méthode permettant de récupérer les données du document sauvegardés dans un fichier
+		/// </summary>
+		private void Récupérer()
+		{
+			try
+			{
+				using (var ficArticles = File.OpenRead(NomFichierPhilatélie))
+				{
+					var formateur = new BinaryFormatter();
+					formateur.Binder = new LierAssemblagesSimplement();
+					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
+					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
+					m_commandesAnnulables = (Stack<ICommande>)formateur.Deserialize(ficArticles);
+				}
+			}
+			catch (FileNotFoundException)
+			{
+				m_articles = new Stack<ArticlePhilatélique>();
+				m_noProchainArticle = NoPremierArticle;
+			}
+		}
+
+		/// <summary>
+		/// Méthode permettant d'enregistrer les données du document dans un fichier
+		/// </summary>
+		private void Enregistrer()
+		{
+			using (var ficArticles = File.Create(NomFichierPhilatélie))
+			{
+				var formateur = new BinaryFormatter();
+				formateur.Serialize(ficArticles, m_articles);
+				formateur.Serialize(ficArticles, m_noProchainArticle);
+				formateur.Serialize(ficArticles, m_commandesAnnulables);
+			}
+		}
+
+		/// <summary>
+		/// Fonction utilitaire pour tester plus rapidement la manipulation de timbre.
+		/// </summary>
+		private void DataSeed()
+		{
+			ArticlePhilatélique article1 = new TimbreSeul(3, "fleurie", DateTime.Now, 5.99, 15.99, Oblitération.Aucune);
+			ArticlePhilatélique article2 = new BlocDeCoin(4, "paysage", DateTime.Now, 11.25, Coin.InférieurDroit, 35.25, 12);
+			ArticlePhilatélique article3 = new TimbreSeul(5, "monument", DateTime.Now, 2.99, 7.99, Oblitération.Normale);
+			ArticlePhilatélique article4 = new BlocDeCoin(6, "paysage", DateTime.Now, 7.88, Coin.SupérieurDroit, 49.99, 9);
+
+			m_articles.Push(article1);
+			m_articles.Push(article2);
+			m_articles.Push(article3);
+			m_articles.Push(article4);
 		}
 
 		/// <summary>
@@ -100,39 +157,8 @@ namespace Philatel
 			}
 		}
 
-		// Les deux opérations qui suivent pourraient peut-être être offertes publiquement... (seulement si
-		// on veut bien laisser comprendre à l'utilisateur qu'on n'utilise pas de base de données)
-		void Récupérer()
-		{
-			try
-			{
-				using (var ficArticles = File.OpenRead(NomFichierPhilatélie))
-				{
-					var formateur = new BinaryFormatter();
-					formateur.Binder = new LierAssemblagesSimplement();
-					m_articles = (Stack<ArticlePhilatélique>)formateur.Deserialize(ficArticles);
-					m_noProchainArticle = (int)formateur.Deserialize(ficArticles);
-					m_commandesAnnulables = (Stack<ICommande>)formateur.Deserialize(ficArticles);
-				}
-			}
-			catch (FileNotFoundException)
-			{
-				m_articles = new Stack<ArticlePhilatélique>();
-				m_noProchainArticle = NoPremierArticle;
-			}
-		}
 
-		void Enregistrer()
-		{
-			using (var ficArticles = File.Create(NomFichierPhilatélie))
-			{
-				var formateur = new BinaryFormatter();
-				formateur.Serialize(ficArticles, m_articles);
-				formateur.Serialize(ficArticles, m_noProchainArticle);
-				formateur.Serialize(ficArticles, m_commandesAnnulables);
-			}
-		}
-
+		/*Opération diverse sur les différents articles*/
 
 		/// <summary>
 		/// Renvoie un accès (en lecture seule) à tous les articles (sans ordre particulier).
@@ -151,7 +177,12 @@ namespace Philatel
 		/// </summary>
 		/// <param name="p_numéro">le numéro de l'article désiré</param>
 		/// <returns>l'article dont on a fourni le numéro ou null s'il n'existe pas</returns>
-		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro) => m_articles.Single(a => a.Numéro == p_numéro);
+		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro)
+		{
+			return m_articles.Single(a => a.Numéro == p_numéro);
+		}
+
+		/*-Opérations CRUD sur les différents articles-*/
 
 		/// <summary>
 		/// Ajoute l'article (les observateurs sont ensuite notifiés).
@@ -172,34 +203,29 @@ namespace Philatel
 		public void Modifier(ArticlePhilatélique p_article)
 		{
 			Stack<ArticlePhilatélique> tempStack = new Stack<ArticlePhilatélique>();
+
 			foreach (ArticlePhilatélique article in m_articles)
 			{
 				if (article.Numéro == p_article.Numéro)
 				{
-					if (!article.Equals(p_article))
-					{
-						m_articles.Pop();
-						m_articles.Push(p_article);
-						break;
-					}
+					tempStack.Push(p_article);
 				}
 				else
 				{
-					tempStack.Push(m_articles.Pop());
+					tempStack.Push(article);
 				}
 			}
+
+			m_articles.Clear();
 
 			foreach (ArticlePhilatélique article in tempStack)
 			{
 				m_articles.Push(article);
 			}
+
 			m_docModifié = true;
 			Notifier(this);
 		}
-
-		public void Vider() => m_articles.Clear();
-
-		public void Remplir(IEnumerable<ArticlePhilatélique> articles) => m_articles = (Stack<ArticlePhilatélique>)articles;
 
 		/// <summary>
 		/// Retire un article des articles conservés.
@@ -210,7 +236,6 @@ namespace Philatel
 		{
 			Stack<ArticlePhilatélique> tempStack = new Stack<ArticlePhilatélique>();
 
-			//Numero A : A revoir
 			foreach (ArticlePhilatélique article in m_articles)
 			{
 				if (article.Numéro != p_noArticle)
@@ -228,6 +253,17 @@ namespace Philatel
 			Notifier(this);
 			return true;
 		}
+
+		/// <summary>
+		/// Permet de vider la liste d'articles
+		/// </summary>
+		public void Vider() => m_articles.Clear();
+
+		/// <summary>
+		/// Permet de remplir la liste d'article avec un IEnumerable
+		/// </summary>
+		/// <param name="articles">Liste d'article utilisé pour populé la liste courante</param>
+		public void Remplir(IEnumerable<ArticlePhilatélique> articles) => m_articles = (Stack<ArticlePhilatélique>)articles;
 
 		/**
 		 * Numero D : A revoir avec le prof, je suis pas sur si on peut sortir

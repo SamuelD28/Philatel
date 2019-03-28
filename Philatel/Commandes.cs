@@ -97,15 +97,14 @@ namespace Philatel
 
 		ArticlePhilatélique m_article;
 
-		public bool Exécuter() // Template Method (appelle une Factory Method)
+		public bool Exécuter()
 		{
 			DlgSaisieArticle d = CréerDlgSaisie(m_article);
 
 			if (d.ShowDialog() == DialogResult.Cancel)
 				return false;
 
-			Document.Instance.RetirerArticle(m_article.Numéro);
-			Document.Instance.Ajouter(d.Extraire());
+			Document.Instance.Modifier(d.Extraire());
 			return true;
 		}
 
@@ -115,7 +114,7 @@ namespace Philatel
 			Document.Instance.Ajouter(m_article);
 		}
 
-		public abstract DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article);  // Factory Method
+		public abstract DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article);  
 
 		public void Rétablir()
 		{
@@ -138,7 +137,7 @@ namespace Philatel
 
 		ArticlePhilatélique m_article;
 
-		public bool Exécuter()  // Template Method (ConfirmerSuppression peut être supplantée)
+		public bool Exécuter()
 		{
 			if (!ConfirmerSuppression(m_article))
 				return false;
