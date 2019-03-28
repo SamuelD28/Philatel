@@ -118,8 +118,8 @@ namespace Philatel
 		{
 			ArticlePhilatélique article1 = new TimbreSeul(3, "fleurie", DateTime.Now, 5.99, 15.99, Oblitération.Aucune);
 			ArticlePhilatélique article2 = new BlocDeCoin(4, "paysage", DateTime.Now, 11.25, Coin.InférieurDroit, 35.25, 12);
-			ArticlePhilatélique article3 = new TimbreSeul(3, "monument", DateTime.Now, 2.99, 7.99, Oblitération.Normale);
-			ArticlePhilatélique article4 = new BlocDeCoin(4, "paysage", DateTime.Now, 7.88, Coin.SupérieurDroit, 49.99, 9);
+			ArticlePhilatélique article3 = new TimbreSeul(5, "monument", DateTime.Now, 2.99, 7.99, Oblitération.Normale);
+			ArticlePhilatélique article4 = new BlocDeCoin(6, "paysage", DateTime.Now, 7.88, Coin.SupérieurDroit, 49.99, 9);
 
 			m_articles.Push(article1);
 			m_articles.Push(article2);
@@ -177,8 +177,10 @@ namespace Philatel
 		/// </summary>
 		/// <param name="p_numéro">le numéro de l'article désiré</param>
 		/// <returns>l'article dont on a fourni le numéro ou null s'il n'existe pas</returns>
-		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro) => m_articles.SingleOrDefault(a => a.Numéro == p_numéro);
-
+		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro)
+		{
+			return m_articles.Single(a => a.Numéro == p_numéro);
+		}
 
 		/*-Opérations CRUD sur les différents articles-*/
 
@@ -206,11 +208,7 @@ namespace Philatel
 			{
 				if (article.Numéro == p_article.Numéro)
 				{
-					//Si les valeurs ont changés, on le remplace par le nouveau
-					if (!article.Equals(p_article))
-					{
-						tempStack.Push(p_article);
-					}
+					tempStack.Push(p_article);
 				}
 				else
 				{

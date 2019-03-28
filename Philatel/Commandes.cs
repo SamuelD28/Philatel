@@ -104,7 +104,7 @@ namespace Philatel
 			if (d.ShowDialog() == DialogResult.Cancel)
 				return false;
 
-			Document.Instance.Modifier(m_article);
+			Document.Instance.Modifier(d.Extraire());
 			return true;
 		}
 
