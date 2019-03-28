@@ -92,33 +92,35 @@ namespace Philatel
 	{
 		public CommandeModification(ArticlePhilatélique p_articleCourant)
 		{
-			m_article = p_articleCourant;
+			m_articleOrignal = p_articleCourant;
 		}
 
-		ArticlePhilatélique m_article;
+		ArticlePhilatélique m_articleOrignal;
+		ArticlePhilatélique m_articleModifier;
 
 		public bool Exécuter()
 		{
-			DlgSaisieArticle d = CréerDlgSaisie(m_article);
+			DlgSaisieArticle d = CréerDlgSaisie(m_articleOrignal);
 
 			if (d.ShowDialog() == DialogResult.Cancel)
 				return false;
 
-			Document.Instance.Modifier(d.Extraire());
+			m_articleModifier = d.Extraire();
+
+			Document.Instance.Modifier(m_articleModifier);
 			return true;
 		}
 
 		public void Annuler()
 		{
-			Document.Instance.RetirerArticle(m_article.Numéro);
-			Document.Instance.Ajouter(m_article);
+			Document.Instance.Modifier(m_articleOrignal);
 		}
 
 		public abstract DlgSaisieArticle CréerDlgSaisie(ArticlePhilatélique p_article);  
 
 		public void Rétablir()
 		{
-			
+			Document.Instance.Modifier(m_articleModifier);
 		}
 	}
 
