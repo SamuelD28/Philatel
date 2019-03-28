@@ -25,8 +25,8 @@ namespace Philatel
             // code, on se sert du System.Type des classes, accessible en général par typeof(), mais aussi à
             // partir d'une donnée par la méthode GetType() (qui renvoie le vrai Type de l'instance et non de
             // la référence elle-même, ce que ferait typeof() dans ce contexte).
-            LesFabriques.Ajouter(typeof(TimbreSeul), FabriqueTimbreSeul.Instance);
-            LesFabriques.Ajouter(typeof(BlocDeCoin), FabriqueBlocDeCoin.Instance);
+            LesFabriques.GetInstance().Ajouter(typeof(TimbreSeul), FabriqueTimbreSeul.Instance);
+            LesFabriques.GetInstance().Ajouter(typeof(BlocDeCoin), FabriqueBlocDeCoin.Instance);
             // N.B. Si on voulait rendre le programme plus clair pour les humains, on pourrait utiliser la
             //      propriété .FullName sur les valeurs de type Type : on pourrait ainsi avoir un Dictionary
             //      dont la clef serait une string au lieu d'une valeur de type Type. Mais ce serait juste
@@ -65,7 +65,7 @@ namespace Philatel
                         {
                             // On exécute la propriété pour créer le singleton
                             var fabrique = (IFabriqueCommande)propriétéInstance.GetValue(null);
-                            LesFabriques.Ajouter(typePourArticle, fabrique);
+                            LesFabriques.GetInstance().Ajouter(typePourArticle, fabrique);
                         }
                     }
                 }

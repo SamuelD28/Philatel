@@ -25,7 +25,7 @@ namespace Philatel
             Text = InfoApp.Nom;
             m_doc.Changement += MettreÀJourListe; // Système d'inscription en observateur
 
-            LesFabriques.CompléterLeMenu(opérationsAjouterToolStripMenuItem, OpérationsAjouter);
+            CompléterLeMenu(opérationsAjouterToolStripMenuItem, OpérationsAjouter);
             MettreÀJourListe(null);
 
         }
@@ -59,7 +59,7 @@ namespace Philatel
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e) => m_doc.Fermer();
 
 
-		/*--Opération effectuer dans le menu--*/
+		/*--Opération Modifiante effectuer dans le menu--*/
 
         public void OpérationsAjouter(object p_sender, EventArgs p_e)
         {
@@ -86,7 +86,7 @@ namespace Philatel
 
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IFabriqueCommande fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
+            IFabriqueCommande fab = LesFabriques.GetInstance().FabriqueDe(m_articleCourant.GetType());
             ICommande commande = fab.CréerCommandeModifier(m_articleCourant);
 
             if (commande.Exécuter())
@@ -98,7 +98,7 @@ namespace Philatel
 
         private void opérationsSupprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IFabriqueCommande fab = LesFabriques.FabriqueDe(m_articleCourant.GetType());
+            IFabriqueCommande fab = LesFabriques.GetInstance().FabriqueDe(m_articleCourant.GetType());
             ICommande commande = fab.CréerCommandeSupprimer(m_articleCourant);
 
             if (commande.Exécuter())
@@ -120,6 +120,9 @@ namespace Philatel
 			}
 		}
 
+
+		/*-Actions relatived au menu-*/
+
         private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e) => new DlgÀPropos().ShowDialog();
 
         private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e) => Close();
@@ -135,6 +138,15 @@ namespace Philatel
 			effacertout.Enabled = m_doc.TousLesArticles().Count() > 0;
         }
 
+		public void CompléterLeMenu(ToolStripMenuItem p_menu, EventHandler p_eh) 
+		{                                                                                
+			//foreach (var fab in m_fabriques)                                            
+			//{
+			//	var tsi = new ToolStripMenuItem(fab.Value.DescriptionPourMenu(), null, p_eh);
+			//	tsi.Tag = fab.Value; // .Key est l'identificateur, donc .Value est la fabrique
+			//	p_menu.DropDownItems.Add(tsi);
+			//}
+		}
 
 		/*--Opération par les boutons sur le coté de la liste--*/
 
