@@ -67,7 +67,7 @@ namespace Philatel
                 dateTimeParution.Value = DateTime.Today;
             }
 
-            textBoxTailleEtForme.Text = Article.TailleEtForme;
+            textBox1.Text = Article.TailleEtForme;
 
             textBoxPrixPayé.Text = Article.PrixPayé.ToString() ?? "";  
         }
@@ -101,7 +101,7 @@ namespace Philatel
                 motif = comboBoxMotifs.SelectedItem.ToString();
             }
 
-            string tailleEtForme = StringAvecLongueurMinimum(textBoxTailleEtForme, 1, "Taille et forme");
+            string tailleEtForme = StringAvecLongueurMinimum(textBox1, 1, "Taille et forme");
                   
             DateTime? parution = dateTimeParution.Checked ? dateTimeParution.Value : (DateTime?)null;
 
