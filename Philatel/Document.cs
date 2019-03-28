@@ -50,6 +50,7 @@ namespace Philatel
 			}
 		}
 
+
 		/*Méthode sur le manipulation du document et ses données*/
 
 		/// <summary>

@@ -27,8 +27,8 @@ namespace Philatel
 
             LesFabriques.CompléterLeMenu(opérationsAjouterToolStripMenuItem, OpérationsAjouter);
             MettreÀJourListe(null);
-        }
 
+        }
 
 		/*-Méthodes diverses sur le formulaire principal-*/
 
@@ -72,6 +72,7 @@ namespace Philatel
 			{
 				m_doc.PousserCommandeAnnulable(commande);
 				m_doc.ViderCommandeRétablissante();
+				ActiverDésactiverMenus(p_sender, p_e);
 			}
         }
 
@@ -115,7 +116,7 @@ namespace Philatel
 				ICommande commandeRétablissante = m_doc.RetirerCommandeRétablissante();
 				commandeRétablissante.Rétablir();
 				m_doc.PousserCommandeAnnulable(commandeRétablissante);
-				MettreÀJourListe(m_doc);
+				MettreÀJourListe(m_doc); //La liste devrait se mettre à jour automatiquement
 			}
 		}
 
@@ -125,11 +126,13 @@ namespace Philatel
 
         private void ActiverDésactiverMenus(object sender, EventArgs e)
         {
-            opérationsAnnulerToolStripMenuItem.Enabled = !m_doc.AucuneCommandeAnnulable();
             bool actif = m_articleCourant != null;
-			Rétablir_Btn.Enabled = (!m_doc.AucuneCommandeRetablissante());
+            opérationsAnnulerToolStripMenuItem.Enabled = !m_doc.AucuneCommandeAnnulable();
             opérationsModifierToolStripMenuItem.Enabled = actif;
             opérationsSupprimerToolStripMenuItem.Enabled = actif;
+
+			Rétablir_Btn.Enabled = (!m_doc.AucuneCommandeRetablissante());
+			effacertout.Enabled = m_doc.TousLesArticles().Count() > 0;
         }
 
 
@@ -145,7 +148,8 @@ namespace Philatel
 				{
 					m_doc.PousserCommandeAnnulable(commande);
 					m_doc.ViderCommandeRétablissante();
-					MettreÀJourListe(m_doc);
+					MettreÀJourListe(m_doc); //La liste devrait se mettre à jour automatiquement quand survient un changement
+					ActiverDésactiverMenus(sender, e); //Le menu ne se met pas a jour.
 				}
 			}
 		}
