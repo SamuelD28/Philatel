@@ -33,7 +33,7 @@ namespace Philatel
             Article = p_article;
 
             comboBoxMotifs.Items.Clear();
-            foreach (string motif in ArticlePhilatélique.TousLesMotifs)
+            foreach (string motif in Document.ObtenirTousLesMotifs)
             {
                 comboBoxMotifs.Items.Add(motif);
             }
@@ -67,9 +67,9 @@ namespace Philatel
                 dateTimeParution.Value = DateTime.Today;
             }
 
-            textBox1.Text = Article.TailleEtForme;
+            textBoxTailleEtForme.Text = Article.TailleEtForme;
 
-            textBoxPrixPayé.Text = Article.PrixPayé.ToString() ?? "";  
+            textBoxPrixPayé.Text = Article.PrixPayé.ToString() ?? String.Empty;  
         }
 
         private void DésactiverLesChamps()
@@ -88,12 +88,12 @@ namespace Philatel
                 MB.Avertir("Choisir une option de motif ou en saisir un nouveau");
                 return false;
             }
-
+            
             if (!string.IsNullOrEmpty(textBoxMotif.Text))
             {
-                motif = textBoxMotif.Text;
-                // TODO Need some Decheezifying 
-                ArticlePhilatélique.TousLesMotifs.Add(motif);
+                string motifFormaté = Char.ToUpper(textBoxMotif.Text[0]) + textBoxMotif.Text.Substring(1).ToLower();
+                motif = motifFormaté;
+                Document.AjouterMotif(motifFormaté);
             }
 
             else
@@ -101,7 +101,7 @@ namespace Philatel
                 motif = comboBoxMotifs.SelectedItem.ToString();
             }
 
-            string tailleEtForme = StringAvecLongueurMinimum(textBox1, 1, "Taille et forme");
+            string tailleEtForme = StringAvecLongueurMinimum(textBoxTailleEtForme, 1, "Taille et forme");
                   
             DateTime? parution = dateTimeParution.Checked ? dateTimeParution.Value : (DateTime?)null;
 

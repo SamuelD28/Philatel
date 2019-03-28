@@ -31,11 +31,11 @@ namespace AP_PNC
             if (p_pnc != null)
             {
                 textBoxValeurPlanche.Text = $"{p_pnc.ValeurPlanche}";
-                textBoxNbTimbres.Text = $"{p_pnc.NombreTimbre}";
-                textBoxNbTimbresDifférents.Text = $"{p_pnc.NombreTimbreDifférent}";
+                textBoxNbTimbres.Text = $"{p_pnc.NombreTimbres}";
+                textBoxNbTimbresDifférents.Text = $"{p_pnc.NombreTimbresDifférent}";
                 textBoxNomDesigner.Text = $"{p_pnc.NomDesigner}";
-                textBoxNbLignes.Text = $"{p_pnc.NombreLigne}";
-                textBoxNbColonnes.Text = $"{p_pnc.NombreColonne}";
+                textBoxNbLignes.Text = $"{p_pnc.NombreLignes}";
+                textBoxNbColonnes.Text = $"{p_pnc.NombreColonnes}";
             }
         }
 

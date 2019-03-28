@@ -12,24 +12,24 @@ namespace AP_PNC
 	public class PlancheNonCoupée : ArticlePhilatélique
 	{
 		public PlancheNonCoupée(int p_numéro, string p_motif, string p_tailleEtForme, DateTime? p_parution,
-            int p_nombreTimbres, double p_valeurPlanche, int p_nombreTimbreDifférent,
-			string p_nomDesigner, int p_nombreLigne, int p_nombreColonne, double? p_prixPayé)
+            int p_nombreTimbres, double p_valeurPlanche, int p_nombreTimbresDifférents,
+			string p_nomDesigner, int p_nombreLignes, int p_nombreColonnes, double? p_prixPayé)
 			: base(p_numéro, p_motif, p_tailleEtForme, p_parution, p_prixPayé)
 		{
 			ValeurPlanche = p_valeurPlanche;
-			NombreTimbre = p_nombreTimbres;
-			NombreTimbreDifférent = p_nombreTimbreDifférent;
+			NombreTimbres = p_nombreTimbres;
+			NombreTimbresDifférent = p_nombreTimbresDifférents;
 			NomDesigner = p_nomDesigner;
-			NombreLigne = p_nombreLigne;
-			NombreColonne = p_nombreColonne;
+			NombreLignes = p_nombreLignes;
+			NombreColonnes = p_nombreColonnes;
 		}
 
 		public double ValeurPlanche { get; }
-		public int NombreTimbre { get; }
-		public int NombreTimbreDifférent { get; }
+		public int NombreTimbres { get; }
+		public int NombreTimbresDifférent { get; }
 		public string NomDesigner { get; }
-		public int NombreLigne { get; }
-		public int NombreColonne { get; }
+		public int NombreLignes { get; }
+		public int NombreColonnes { get; }
 
 		public override string Catégorie => "Planche de timbres non coupées";
 
