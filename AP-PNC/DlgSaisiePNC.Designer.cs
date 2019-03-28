@@ -40,12 +40,13 @@
             this.textBoxNbColonnes = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBoxValeurPlanche = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 95);
+            this.label5.Location = new System.Drawing.Point(13, 129);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 13);
             this.label5.TabIndex = 1001;
@@ -54,7 +55,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 122);
+            this.label6.Location = new System.Drawing.Point(13, 154);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(138, 13);
             this.label6.TabIndex = 1002;
@@ -63,7 +64,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 153);
+            this.label7.Location = new System.Drawing.Point(13, 185);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(78, 13);
             this.label7.TabIndex = 1003;
@@ -72,7 +73,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(16, 186);
+            this.label8.Location = new System.Drawing.Point(13, 218);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(95, 13);
             this.label8.TabIndex = 1004;
@@ -81,7 +82,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(16, 218);
+            this.label9.Location = new System.Drawing.Point(13, 250);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(111, 13);
             this.label9.TabIndex = 1005;
@@ -89,35 +90,35 @@
             // 
             // textBoxNbTimbres
             // 
-            this.textBoxNbTimbres.Location = new System.Drawing.Point(109, 95);
+            this.textBoxNbTimbres.Location = new System.Drawing.Point(105, 128);
             this.textBoxNbTimbres.Name = "textBoxNbTimbres";
             this.textBoxNbTimbres.Size = new System.Drawing.Size(100, 20);
             this.textBoxNbTimbres.TabIndex = 1006;
             // 
             // textBoxNbTimbresDifférents
             // 
-            this.textBoxNbTimbresDifférents.Location = new System.Drawing.Point(160, 122);
+            this.textBoxNbTimbresDifférents.Location = new System.Drawing.Point(157, 154);
             this.textBoxNbTimbresDifférents.Name = "textBoxNbTimbresDifférents";
             this.textBoxNbTimbresDifférents.Size = new System.Drawing.Size(100, 20);
             this.textBoxNbTimbresDifférents.TabIndex = 1007;
             // 
             // textBoxNomDesigner
             // 
-            this.textBoxNomDesigner.Location = new System.Drawing.Point(101, 153);
+            this.textBoxNomDesigner.Location = new System.Drawing.Point(98, 185);
             this.textBoxNomDesigner.Name = "textBoxNomDesigner";
             this.textBoxNomDesigner.Size = new System.Drawing.Size(213, 20);
             this.textBoxNomDesigner.TabIndex = 1008;
             // 
             // textBoxNbLignes
             // 
-            this.textBoxNbLignes.Location = new System.Drawing.Point(118, 186);
+            this.textBoxNbLignes.Location = new System.Drawing.Point(115, 218);
             this.textBoxNbLignes.Name = "textBoxNbLignes";
             this.textBoxNbLignes.Size = new System.Drawing.Size(100, 20);
             this.textBoxNbLignes.TabIndex = 1009;
             // 
             // textBoxNbColonnes
             // 
-            this.textBoxNbColonnes.Location = new System.Drawing.Point(134, 218);
+            this.textBoxNbColonnes.Location = new System.Drawing.Point(131, 250);
             this.textBoxNbColonnes.Name = "textBoxNbColonnes";
             this.textBoxNbColonnes.Size = new System.Drawing.Size(100, 20);
             this.textBoxNbColonnes.TabIndex = 1010;
@@ -125,7 +126,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(173, 67);
+            this.label10.Location = new System.Drawing.Point(170, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(87, 13);
             this.label10.TabIndex = 1011;
@@ -133,16 +134,26 @@
             // 
             // textBoxValeurPlanche
             // 
-            this.textBoxValeurPlanche.Location = new System.Drawing.Point(267, 67);
+            this.textBoxValeurPlanche.Location = new System.Drawing.Point(263, 96);
             this.textBoxValeurPlanche.Name = "textBoxValeurPlanche";
             this.textBoxValeurPlanche.Size = new System.Drawing.Size(100, 20);
             this.textBoxValeurPlanche.TabIndex = 1012;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(369, 103);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(13, 13);
+            this.label11.TabIndex = 1013;
+            this.label11.Text = "$";
             // 
             // DlgSaisiePNC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 297);
+            this.ClientSize = new System.Drawing.Size(409, 320);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.textBoxValeurPlanche);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBoxNbColonnes);
@@ -169,6 +180,7 @@
             this.Controls.SetChildIndex(this.textBoxNbColonnes, 0);
             this.Controls.SetChildIndex(this.label10, 0);
             this.Controls.SetChildIndex(this.textBoxValeurPlanche, 0);
+            this.Controls.SetChildIndex(this.label11, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,5 +200,6 @@
         private System.Windows.Forms.TextBox textBoxNbColonnes;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBoxValeurPlanche;
+        private System.Windows.Forms.Label label11;
     }
 }

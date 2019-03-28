@@ -39,7 +39,7 @@ namespace AP_PNC
             }
         }
 
-        public override bool FinirValidation(string p_motif, DateTime? p_parution, double p_prixPayé)
+        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             int nombreTimbres = Int32AvecMinimum(textBoxNbTimbres, 1, "Nombre de timbres dans la planche");
             double valeurPlanche = DoubleAvecMinimum(textBoxValeurPlanche, 0.01, "Valeur de la planche");
@@ -49,8 +49,8 @@ namespace AP_PNC
             int nombreColonnes = Int32AvecMinimum(textBoxNbColonnes, 1, "Nombre de colonne dans la planche");
 
             Article = new PlancheNonCoupée(
-                (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(), p_motif, p_parution, p_prixPayé, 
-                nombreTimbres, valeurPlanche, nombreTimbresDifférents, nomDesigner, nombreLignes, nombreColonnes);
+                (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(), p_motif, p_tailleEtForme, p_parution, 
+                nombreTimbres, valeurPlanche, nombreTimbresDifférents, nomDesigner, nombreLignes, nombreColonnes, p_prixPayé);
 
             return true;
         }

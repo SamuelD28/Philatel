@@ -36,7 +36,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 93);
+            this.label5.Location = new System.Drawing.Point(12, 130);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(128, 13);
             this.label5.TabIndex = 7;
@@ -44,7 +44,7 @@
             // 
             // textBoxValeurTimbres
             // 
-            this.textBoxValeurTimbres.Location = new System.Drawing.Point(146, 90);
+            this.textBoxValeurTimbres.Location = new System.Drawing.Point(146, 123);
             this.textBoxValeurTimbres.Name = "textBoxValeurTimbres";
             this.textBoxValeurTimbres.Size = new System.Drawing.Size(59, 20);
             this.textBoxValeurTimbres.TabIndex = 8;
@@ -52,7 +52,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(211, 93);
+            this.label6.Location = new System.Drawing.Point(211, 130);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(13, 13);
             this.label6.TabIndex = 9;
@@ -62,7 +62,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(367, 169);
+            this.ClientSize = new System.Drawing.Size(367, 200);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBoxValeurTimbres);
             this.Controls.Add(this.label6);

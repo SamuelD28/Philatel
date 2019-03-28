@@ -67,7 +67,9 @@ namespace Philatel
                 dateTimeParution.Value = DateTime.Today;
             }
 
-            textBoxPrixPayé.Text = $"{Article.PrixPayé:F2}";
+            textBoxTailleEtForme.Text = Article.TailleEtForme;
+
+            textBoxPrixPayé.Text = Article.PrixPayé.ToString() ?? "";  
         }
 
         private void DésactiverLesChamps()
@@ -98,21 +100,19 @@ namespace Philatel
             {
                 motif = comboBoxMotifs.SelectedItem.ToString();
             }
-            
 
-            //string motif = StringNonVide(textBoxMotif, "Motif");
+            string tailleEtForme = StringAvecLongueurMinimum(textBoxTailleEtForme, 1, "Taille et forme");
+                  
             DateTime? parution = dateTimeParution.Checked ? dateTimeParution.Value : (DateTime?)null;
-            double prixPayé = DoubleAvecMinimum(textBoxPrixPayé, 0.0, "Prix payé");
+
+            double? prixPayé = DoubleAvecMinimumOuNull(textBoxPrixPayé, 0.0, "Prix payé");
             // S'il y en avait beaucoup, il faudrait probablement créer un BaseDeArticlePhilatélique
 
-            //string motif = comboBoxMotifs.SelectedIndex.ToString();
-
-
-            return FinirValidation(motif, parution, prixPayé); // TM...
+            return FinirValidation(motif, tailleEtForme, parution, prixPayé); // TM...
         }
 
         // Pour Template Method ChampsValides, doit faire un set sur Article
-        public virtual bool FinirValidation(string p_motif, DateTime? p_parution, double p_prixPayé)
+        public virtual bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             throw new NotImplementedException(); // Doit être définie dans la classe dérivée (devait être
         }                                        //  abstraite mais on ne peut pas pour l'éditeur visuel)

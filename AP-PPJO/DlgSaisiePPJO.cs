@@ -31,13 +31,13 @@ namespace PhilatelPPJO
                 textBoxValeurTimbres.Text = $"{p_ppjo.ValeurTimbres:F2}";
         }
 
-        public override bool FinirValidation(string p_motif, DateTime? p_parution, double p_prixPayé)
+        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             double valeurTimbres = DoubleAvecMinimum(textBoxValeurTimbres, 0.01, "Valeur des timbres");
 
             Article = new PPJO(
                 (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(),
-                p_motif, p_parution, p_prixPayé, valeurTimbres);
+                p_motif, p_tailleEtForme, p_parution, valeurTimbres, p_prixPayé);
             return true;
         }
     }

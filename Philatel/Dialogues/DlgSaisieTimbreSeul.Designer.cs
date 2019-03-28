@@ -37,7 +37,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 93);
+            this.label5.Location = new System.Drawing.Point(12, 130);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 13);
             this.label5.TabIndex = 7;
@@ -45,7 +45,7 @@
             // 
             // textBoxValeurTimbre
             // 
-            this.textBoxValeurTimbre.Location = new System.Drawing.Point(107, 90);
+            this.textBoxValeurTimbre.Location = new System.Drawing.Point(107, 123);
             this.textBoxValeurTimbre.Name = "textBoxValeurTimbre";
             this.textBoxValeurTimbre.Size = new System.Drawing.Size(66, 20);
             this.textBoxValeurTimbre.TabIndex = 8;
@@ -53,7 +53,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(179, 93);
+            this.label6.Location = new System.Drawing.Point(179, 130);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(13, 13);
             this.label6.TabIndex = 9;
@@ -62,7 +62,7 @@
             // checkBoxOblitéré
             // 
             this.checkBoxOblitéré.AutoSize = true;
-            this.checkBoxOblitéré.Location = new System.Drawing.Point(15, 116);
+            this.checkBoxOblitéré.Location = new System.Drawing.Point(16, 157);
             this.checkBoxOblitéré.Name = "checkBoxOblitéré";
             this.checkBoxOblitéré.Size = new System.Drawing.Size(62, 17);
             this.checkBoxOblitéré.TabIndex = 10;
@@ -73,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(370, 186);
+            this.ClientSize = new System.Drawing.Size(370, 221);
             this.Controls.Add(this.checkBoxOblitéré);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBoxValeurTimbre);

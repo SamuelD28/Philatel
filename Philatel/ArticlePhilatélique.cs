@@ -11,10 +11,11 @@ namespace Philatel
     {
         public static List<string> TousLesMotifs = new List<string>() {"Fleurie", "Paysage", "Monument" };
 
-        public ArticlePhilatélique(int p_numéro, string p_motif, DateTime? p_parution, double p_prixPayé)
+        public ArticlePhilatélique(int p_numéro, string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             Numéro = p_numéro;
             Motif = p_motif;
+            TailleEtForme = p_tailleEtForme;
             Parution = p_parution;
             PrixPayé = p_prixPayé;
         }
@@ -22,7 +23,8 @@ namespace Philatel
         public int Numéro  { get; }
         public string Motif { get; }
         public DateTime? Parution  { get; }
-        public double PrixPayé { get; }
+        public string TailleEtForme { get; }
+        public double? PrixPayé { get; }
 
         /// <summary>
         /// Met des \r\n entre les lignes...

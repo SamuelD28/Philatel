@@ -44,7 +44,7 @@ namespace Philatel
             }
         }
 
-        public override bool FinirValidation(string p_motif, DateTime? p_parution, double p_prixPayé)
+        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             double valeurTimbre = DoubleAvecMinimum(textBoxValeurTimbre, 0.01, "Valeur d'un timbre");
             int nbTimbres = Int32AvecMinimum(textBoxNombreTimbres, 1, "Nombre de timbres");
@@ -52,7 +52,7 @@ namespace Philatel
 
             Article = new BlocDeCoin(
                 (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(),
-                p_motif, p_parution, p_prixPayé, (Coin)codeCoin, valeurTimbre, nbTimbres);
+                p_motif, p_tailleEtForme, p_parution, (Coin)codeCoin, valeurTimbre, nbTimbres, p_prixPayé);
             return true;
         }
     }
