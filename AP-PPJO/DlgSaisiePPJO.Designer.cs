@@ -39,7 +39,7 @@
             this.label5.Location = new System.Drawing.Point(12, 130);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(128, 13);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 6001;
             this.label5.Text = "&Valeur totale des timbres :";
             // 
             // textBoxValeurTimbres
@@ -47,7 +47,7 @@
             this.textBoxValeurTimbres.Location = new System.Drawing.Point(146, 123);
             this.textBoxValeurTimbres.Name = "textBoxValeurTimbres";
             this.textBoxValeurTimbres.Size = new System.Drawing.Size(59, 20);
-            this.textBoxValeurTimbres.TabIndex = 8;
+            this.textBoxValeurTimbres.TabIndex = 6002;
             // 
             // label6
             // 

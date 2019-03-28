@@ -49,7 +49,7 @@
             this.label5.Location = new System.Drawing.Point(13, 129);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 13);
-            this.label5.TabIndex = 1001;
+            this.label5.TabIndex = 7001;
             this.label5.Text = "&Nombre timbres :";
             // 
             // label6
@@ -58,7 +58,7 @@
             this.label6.Location = new System.Drawing.Point(13, 154);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(138, 13);
-            this.label6.TabIndex = 1002;
+            this.label6.TabIndex = 8001;
             this.label6.Text = "Nombre &timbres différents :  ";
             // 
             // label7
@@ -67,7 +67,7 @@
             this.label7.Location = new System.Drawing.Point(13, 185);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(78, 13);
-            this.label7.TabIndex = 1003;
+            this.label7.TabIndex = 9001;
             this.label7.Text = "Nom desi&gner :";
             // 
             // label8
@@ -76,7 +76,7 @@
             this.label8.Location = new System.Drawing.Point(13, 218);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(95, 13);
-            this.label8.TabIndex = 1004;
+            this.label8.TabIndex = 10001;
             this.label8.Text = "Nombre de &lignes :";
             // 
             // label9
@@ -85,7 +85,7 @@
             this.label9.Location = new System.Drawing.Point(13, 250);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(111, 13);
-            this.label9.TabIndex = 1005;
+            this.label9.TabIndex = 11001;
             this.label9.Text = "Nombre de &colonnes :";
             // 
             // textBoxNbTimbres
@@ -93,35 +93,35 @@
             this.textBoxNbTimbres.Location = new System.Drawing.Point(105, 128);
             this.textBoxNbTimbres.Name = "textBoxNbTimbres";
             this.textBoxNbTimbres.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNbTimbres.TabIndex = 1006;
+            this.textBoxNbTimbres.TabIndex = 7002;
             // 
             // textBoxNbTimbresDifférents
             // 
             this.textBoxNbTimbresDifférents.Location = new System.Drawing.Point(157, 154);
             this.textBoxNbTimbresDifférents.Name = "textBoxNbTimbresDifférents";
             this.textBoxNbTimbresDifférents.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNbTimbresDifférents.TabIndex = 1007;
+            this.textBoxNbTimbresDifférents.TabIndex = 8002;
             // 
             // textBoxNomDesigner
             // 
             this.textBoxNomDesigner.Location = new System.Drawing.Point(98, 185);
             this.textBoxNomDesigner.Name = "textBoxNomDesigner";
             this.textBoxNomDesigner.Size = new System.Drawing.Size(213, 20);
-            this.textBoxNomDesigner.TabIndex = 1008;
+            this.textBoxNomDesigner.TabIndex = 9002;
             // 
             // textBoxNbLignes
             // 
             this.textBoxNbLignes.Location = new System.Drawing.Point(115, 218);
             this.textBoxNbLignes.Name = "textBoxNbLignes";
             this.textBoxNbLignes.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNbLignes.TabIndex = 1009;
+            this.textBoxNbLignes.TabIndex = 10002;
             // 
             // textBoxNbColonnes
             // 
             this.textBoxNbColonnes.Location = new System.Drawing.Point(131, 250);
             this.textBoxNbColonnes.Name = "textBoxNbColonnes";
             this.textBoxNbColonnes.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNbColonnes.TabIndex = 1010;
+            this.textBoxNbColonnes.TabIndex = 11002;
             // 
             // label10
             // 
@@ -129,15 +129,15 @@
             this.label10.Location = new System.Drawing.Point(170, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(87, 13);
-            this.label10.TabIndex = 1011;
-            this.label10.Text = "Valeur &planche : ";
+            this.label10.TabIndex = 6001;
+            this.label10.Text = "Valeur planc&he : ";
             // 
             // textBoxValeurPlanche
             // 
             this.textBoxValeurPlanche.Location = new System.Drawing.Point(263, 96);
             this.textBoxValeurPlanche.Name = "textBoxValeurPlanche";
             this.textBoxValeurPlanche.Size = new System.Drawing.Size(100, 20);
-            this.textBoxValeurPlanche.TabIndex = 1012;
+            this.textBoxValeurPlanche.TabIndex = 6002;
             // 
             // label11
             // 

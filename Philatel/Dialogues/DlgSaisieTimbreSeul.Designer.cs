@@ -40,7 +40,7 @@
             this.label5.Location = new System.Drawing.Point(12, 130);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 13);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 6001;
             this.label5.Text = "&Valeur du timbre :";
             // 
             // textBoxValeurTimbre
@@ -48,7 +48,7 @@
             this.textBoxValeurTimbre.Location = new System.Drawing.Point(107, 123);
             this.textBoxValeurTimbre.Name = "textBoxValeurTimbre";
             this.textBoxValeurTimbre.Size = new System.Drawing.Size(66, 20);
-            this.textBoxValeurTimbre.TabIndex = 8;
+            this.textBoxValeurTimbre.TabIndex = 6002;
             // 
             // label6
             // 
@@ -65,7 +65,7 @@
             this.checkBoxOblitéré.Location = new System.Drawing.Point(16, 157);
             this.checkBoxOblitéré.Name = "checkBoxOblitéré";
             this.checkBoxOblitéré.Size = new System.Drawing.Size(62, 17);
-            this.checkBoxOblitéré.TabIndex = 10;
+            this.checkBoxOblitéré.TabIndex = 7000;
             this.checkBoxOblitéré.Text = "&Oblitéré";
             this.checkBoxOblitéré.UseVisualStyleBackColor = true;
             // 

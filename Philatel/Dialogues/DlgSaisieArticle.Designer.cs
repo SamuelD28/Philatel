@@ -38,7 +38,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxMotifs = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBoxTailleEtForme = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -47,7 +47,7 @@
             this.label1.Location = new System.Drawing.Point(13, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 0;
+            this.label1.TabIndex = 1003;
             this.label1.Text = "&Motif :";
             // 
             // label2
@@ -56,7 +56,7 @@
             this.label2.Location = new System.Drawing.Point(13, 73);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 13);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 4001;
             this.label2.Text = "&Date de parution :";
             // 
             // dateTimeParution
@@ -66,7 +66,7 @@
             this.dateTimeParution.Name = "dateTimeParution";
             this.dateTimeParution.ShowCheckBox = true;
             this.dateTimeParution.Size = new System.Drawing.Size(119, 20);
-            this.dateTimeParution.TabIndex = 3;
+            this.dateTimeParution.TabIndex = 4002;
             // 
             // label3
             // 
@@ -74,7 +74,7 @@
             this.label3.Location = new System.Drawing.Point(13, 99);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 5001;
             this.label3.Text = "&Prix payé :";
             // 
             // textBoxPrixPayé
@@ -82,7 +82,7 @@
             this.textBoxPrixPayé.Location = new System.Drawing.Point(75, 96);
             this.textBoxPrixPayé.Name = "textBoxPrixPayé";
             this.textBoxPrixPayé.Size = new System.Drawing.Size(66, 20);
-            this.textBoxPrixPayé.TabIndex = 5;
+            this.textBoxPrixPayé.TabIndex = 5002;
             // 
             // label4
             // 
@@ -98,7 +98,7 @@
             this.textBoxMotif.Location = new System.Drawing.Point(252, 13);
             this.textBoxMotif.Name = "textBoxMotif";
             this.textBoxMotif.Size = new System.Drawing.Size(108, 20);
-            this.textBoxMotif.TabIndex = 1;
+            this.textBoxMotif.TabIndex = 2002;
             // 
             // label5
             // 
@@ -106,7 +106,7 @@
             this.label5.Location = new System.Drawing.Point(187, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 13);
-            this.label5.TabIndex = 1001;
+            this.label5.TabIndex = 2001;
             this.label5.Text = "&Nouveau : ";
             // 
             // comboBoxMotifs
@@ -115,7 +115,7 @@
             this.comboBoxMotifs.Location = new System.Drawing.Point(56, 13);
             this.comboBoxMotifs.Name = "comboBoxMotifs";
             this.comboBoxMotifs.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxMotifs.TabIndex = 1002;
+            this.comboBoxMotifs.TabIndex = 1004;
             // 
             // label6
             // 
@@ -123,22 +123,22 @@
             this.label6.Location = new System.Drawing.Point(12, 46);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 13);
-            this.label6.TabIndex = 1003;
+            this.label6.TabIndex = 3001;
             this.label6.Text = "Taille et &forme :";
             // 
-            // textBoxTailleEtForme
+            // textBox1
             // 
-            this.textBoxTailleEtForme.Location = new System.Drawing.Point(97, 44);
-            this.textBoxTailleEtForme.Name = "textBoxTailleEtForme";
-            this.textBoxTailleEtForme.Size = new System.Drawing.Size(182, 20);
-            this.textBoxTailleEtForme.TabIndex = 1004;
+            this.textBox1.Location = new System.Drawing.Point(97, 44);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(182, 20);
+            this.textBox1.TabIndex = 3002;
             // 
             // DlgSaisieArticle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(372, 179);
-            this.Controls.Add(this.textBoxTailleEtForme);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.comboBoxMotifs);
             this.Controls.Add(this.label5);
@@ -161,7 +161,7 @@
             this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.comboBoxMotifs, 0);
             this.Controls.SetChildIndex(this.label6, 0);
-            this.Controls.SetChildIndex(this.textBoxTailleEtForme, 0);
+            this.Controls.SetChildIndex(this.textBox1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,6 +179,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxMotifs;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBoxTailleEtForme;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
