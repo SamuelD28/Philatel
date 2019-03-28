@@ -93,13 +93,12 @@
 			this.opérationsToolStripMenuItem.Name = "opérationsToolStripMenuItem";
 			this.opérationsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
 			this.opérationsToolStripMenuItem.Text = "&Opérations";
-			this.opérationsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.ActiverDésactiverMenus);
 			// 
 			// opérationsAnnulerToolStripMenuItem
 			// 
 			this.opérationsAnnulerToolStripMenuItem.Name = "opérationsAnnulerToolStripMenuItem";
 			this.opérationsAnnulerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.opérationsAnnulerToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.opérationsAnnulerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.opérationsAnnulerToolStripMenuItem.Text = "&Annuler";
 			this.opérationsAnnulerToolStripMenuItem.Click += new System.EventHandler(this.opérationsAnnulerToolStripMenuItem_Click);
 			// 
@@ -107,32 +106,32 @@
 			// 
 			this.Rétablir_Btn.Name = "Rétablir_Btn";
 			this.Rétablir_Btn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.Rétablir_Btn.Size = new System.Drawing.Size(157, 22);
+			this.Rétablir_Btn.Size = new System.Drawing.Size(180, 22);
 			this.Rétablir_Btn.Text = "Rétablir";
 			this.Rétablir_Btn.Click += new System.EventHandler(this.Rétablir_Btn_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// opérationsAjouterToolStripMenuItem
 			// 
 			this.opérationsAjouterToolStripMenuItem.Name = "opérationsAjouterToolStripMenuItem";
-			this.opérationsAjouterToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.opérationsAjouterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.opérationsAjouterToolStripMenuItem.Text = "A&jouter";
 			// 
 			// opérationsModifierToolStripMenuItem
 			// 
 			this.opérationsModifierToolStripMenuItem.Name = "opérationsModifierToolStripMenuItem";
-			this.opérationsModifierToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.opérationsModifierToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.opérationsModifierToolStripMenuItem.Text = "&Modifier...";
 			this.opérationsModifierToolStripMenuItem.Click += new System.EventHandler(this.opérationsModifierToolStripMenuItem_Click);
 			// 
 			// opérationsSupprimerToolStripMenuItem
 			// 
 			this.opérationsSupprimerToolStripMenuItem.Name = "opérationsSupprimerToolStripMenuItem";
-			this.opérationsSupprimerToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.opérationsSupprimerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.opérationsSupprimerToolStripMenuItem.Text = "&Supprimer...";
 			this.opérationsSupprimerToolStripMenuItem.Click += new System.EventHandler(this.opérationsSupprimerToolStripMenuItem_Click);
 			// 

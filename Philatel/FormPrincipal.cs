@@ -23,8 +23,12 @@ namespace Philatel
             InitializeComponent();
             new TrieurListe(listViewArticles, "ttdN").TrierSelonColonne(0);
 
+			ActiverDésactiverMenus(null);
+
             Text = InfoApp.Nom;
             m_doc.Changement += MettreÀJourListe; // Système d'inscription en observateur
+			m_doc.Changement += ActiverDésactiverMenus; //On desactive/active les menus chaques fois que la liste change
+
 
             CompléterLeMenu(opérationsAjouterToolStripMenuItem, OpérationsAjouter);
             MettreÀJourListe(null);
@@ -43,7 +47,7 @@ namespace Philatel
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if ((keyData & Keys.Control) == Keys.Control)
-                ActiverDésactiverMenus(null, null);
+                ActiverDésactiverMenus(m_doc);
 
             // Ou, s'il y a des raccourcis avec Alt, comme Alt+F2, etc. : 
             // if (... || (keyData & Keys.Alt) == Keys.Alt || ...) 
@@ -65,71 +69,50 @@ namespace Philatel
 
         public void OpérationsAjouter(object p_sender, EventArgs p_e)
         {
-			//Gere le bouton ajouter
+
             ToolStripMenuItem tsi = (ToolStripMenuItem)p_sender;
             IFabriqueCommande fab = (IFabriqueCommande)tsi.Tag;
             ICommande commande = fab.CréerCommandeAjouter();
-
-            if (commande.Exécuter())
-			{
-				m_gestionCommandes.PousserCommandeAnnulable(commande);
-				m_gestionCommandes.ViderCommandeRétablissante();
-				ActiverDésactiverMenus(p_sender, p_e);
-			}
+			commande.Exécuter();
         }
 
         private void opérationsAnnulerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			ICommande commandeAnnuler = m_gestionCommandes.RetirerCommandeAnnulable();
-            commandeAnnuler.Annuler();
-			m_gestionCommandes.PousserCommandeRétablissante(commandeAnnuler);
-			MettreÀJourListe(m_doc);
+			m_gestionCommandes.RetirerCommandeAnnulable().Annuler();
         }
 
         private void opérationsModifierToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IFabriqueCommande fab = LesFabriques.GetInstance().FabriqueDe(m_articleCourant.GetType());
             ICommande commande = fab.CréerCommandeModifier(m_articleCourant);
-
-            if (commande.Exécuter())
-			{
-				m_gestionCommandes.PousserCommandeAnnulable(commande);
-				m_gestionCommandes.ViderCommandeRétablissante();
-			}
+			commande.Exécuter();
          }
 
         private void opérationsSupprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IFabriqueCommande fab = LesFabriques.GetInstance().FabriqueDe(m_articleCourant.GetType());
             ICommande commande = fab.CréerCommandeSupprimer(m_articleCourant);
-
-            if (commande.Exécuter())
-			{
-				m_gestionCommandes.PousserCommandeAnnulable(commande);
-				m_gestionCommandes.ViderCommandeRétablissante();
-			}
+			commande.Exécuter();
         }
 
 		private void Rétablir_Btn_Click(object sender, EventArgs e)
 		{
-
 			//Numero C : A revoir
 			if(!m_gestionCommandes.AucuneRétablissantes){
 				ICommande commandeRétablissante = m_gestionCommandes.RetirerCommandeRétablissante();
 				commandeRétablissante.Rétablir();
 				m_gestionCommandes.PousserCommandeAnnulable(commandeRétablissante);
-				MettreÀJourListe(m_doc); //La liste devrait se mettre à jour automatiquement
 			}
 		}
 
 
-		/*-Actions relatived au menu-*/
+		/*-Actions relatives au menu-*/
 
         private void aideÀproposToolStripMenuItem_Click(object sender, EventArgs e) => new DlgÀPropos().ShowDialog();
 
         private void fichierQuitterToolStripMenuItem_Click(object sender, EventArgs e) => Close();
 
-        private void ActiverDésactiverMenus(object sender, EventArgs e)
+        private void ActiverDésactiverMenus(Document p_doc)
         {
             bool actif = m_articleCourant != null;
             opérationsAnnulerToolStripMenuItem.Enabled = !m_gestionCommandes.AucuneAnnulables;
@@ -150,22 +133,13 @@ namespace Philatel
 			}
 		}
 
+
 		/*--Opération par les boutons sur le coté de la liste--*/
 
 		private void effacertout_Click(object sender, EventArgs e)
 		{
 			if(ConfirmerOkAnnuler("Voulez-vous effacer toute la liste d'articles"))
-			{
-				ICommande commande = new CommandeEffacerTout();
-
-				if (commande.Exécuter())
-				{
-					m_gestionCommandes.PousserCommandeAnnulable(commande);
-					m_gestionCommandes.ViderCommandeRétablissante();
-					MettreÀJourListe(m_doc); //La liste devrait se mettre à jour automatiquement quand survient un changement
-					ActiverDésactiverMenus(sender, e); //Le menu ne se met pas a jour.
-				}
-			}
+				new CommandeEffacerTout().Exécuter();
 		}
 
         private void buttonAfficher_Click(object sender, EventArgs e)

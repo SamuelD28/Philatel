@@ -49,6 +49,9 @@ namespace Philatel
 
 		public void ViderCommandeRétablissante() => Rétablissantes.Clear();
 
-		public void PousserCommandeAnnulable(ICommande commande) => Annulables.Push(commande);
+		public void PousserCommandeAnnulable(ICommande commande)
+		{
+			Annulables.Push(commande);
+		}
 	}
 }

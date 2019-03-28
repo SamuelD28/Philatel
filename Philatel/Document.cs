@@ -176,10 +176,7 @@ namespace Philatel
 		/// </summary>
 		/// <param name="p_numéro">le numéro de l'article désiré</param>
 		/// <returns>l'article dont on a fourni le numéro ou null s'il n'existe pas</returns>
-		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro)
-		{
-			return m_articles.Single(a => a.Numéro == p_numéro);
-		}
+		public ArticlePhilatélique ArticleSelonNuméro(int p_numéro) => m_articles.Single(a => a.Numéro == p_numéro);
 
 		/*-Opérations CRUD sur les différents articles-*/
 
@@ -256,12 +253,22 @@ namespace Philatel
 		/// <summary>
 		/// Permet de vider la liste d'articles
 		/// </summary>
-		public void Vider() => m_articles.Clear();
+		public void Vider()
+		{
+			m_articles.Clear();
+			m_docModifié = true;
+			Notifier(this);
+		}
 
 		/// <summary>
 		/// Permet de remplir la liste d'article avec un IEnumerable
 		/// </summary>
 		/// <param name="articles">Liste d'article utilisé pour populé la liste courante</param>
-		public void Remplir(IEnumerable<ArticlePhilatélique> articles) => m_articles = (Stack<ArticlePhilatélique>)articles;
+		public void Remplir(IEnumerable<ArticlePhilatélique> articles)
+		{
+			m_articles = (Stack<ArticlePhilatélique>)articles;
+			m_docModifié = true;
+			Notifier(this);
+		}
 	}
 }

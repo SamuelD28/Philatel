@@ -24,16 +24,13 @@ namespace Philatel
 	{
 		Stack<ArticlePhilatélique> m_article;
 
-		public void Annuler()
-		{
-			Document.Instance.Remplir(m_article);
-		}
-
 		public bool Exécuter()
 		{
 			try
 			{
 				m_article = new Stack<ArticlePhilatélique>(Document.Instance.TousLesArticles());
+				GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
+				GestionCommandes.GetInstance().ViderCommandeRétablissante();
 				Document.Instance.Vider();
 				return true;
 			}
@@ -41,6 +38,12 @@ namespace Philatel
 			{
 				return false;
 			}
+		}
+
+		public void Annuler()
+		{
+			GestionCommandes.GetInstance().PousserCommandeRétablissante(this);
+			Document.Instance.Remplir(m_article);
 		}
 
 		public void Rétablir()
@@ -56,10 +59,9 @@ namespace Philatel
 	[Serializable]
 	public abstract class CommandeAjout : ICommande
 	{
-		int m_numéroArticleAjouté;
 		ArticlePhilatélique m_article;
 
-		public bool Exécuter() // Template Method (appelle une Factory Method)
+		public bool Exécuter() 
 		{
 			DlgSaisieArticle d = CréerDlgSaisie();
 
@@ -67,20 +69,21 @@ namespace Philatel
 				return false;
 
 			m_article = d.Extraire();
-			m_numéroArticleAjouté = m_article.Numéro;
-
+			GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
+			GestionCommandes.GetInstance().ViderCommandeRétablissante();
 			Document.Instance.Ajouter(m_article);
 			return true;
 		}
 
-		public void Annuler() => Document.Instance.RetirerArticle(m_numéroArticleAjouté);
-
-		public abstract DlgSaisieArticle CréerDlgSaisie();  // Factory Method
-
-		public void Rétablir()
+		public void Annuler()
 		{
-			Document.Instance.Ajouter(m_article);
+			Document.Instance.RetirerArticle(m_article.Numéro);
+			GestionCommandes.GetInstance().PousserCommandeRétablissante(this);
 		}
+		
+		public void Rétablir() => Document.Instance.Ajouter(m_article);
+
+		public abstract DlgSaisieArticle CréerDlgSaisie(); 
 	}
 
 	/// Classe abstraite CommandeModification : 
@@ -107,12 +110,15 @@ namespace Philatel
 
 			m_articleModifier = d.Extraire();
 
+			GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
+			GestionCommandes.GetInstance().ViderCommandeRétablissante();
 			Document.Instance.Modifier(m_articleModifier);
 			return true;
 		}
 
 		public void Annuler()
 		{
+			GestionCommandes.GetInstance().PousserCommandeRétablissante(this);
 			Document.Instance.Modifier(m_articleOrignal);
 		}
 
@@ -144,11 +150,17 @@ namespace Philatel
 			if (!ConfirmerSuppression(m_article))
 				return false;
 
+			GestionCommandes.GetInstance().PousserCommandeAnnulable(this);
+			GestionCommandes.GetInstance().ViderCommandeRétablissante();
 			Document.Instance.RetirerArticle(m_article.Numéro);
 			return true;
 		}
 
-		public void Annuler() => Document.Instance.Ajouter(m_article);
+		public void Annuler()
+		{
+			GestionCommandes.GetInstance().PousserCommandeRétablissante(this);
+			Document.Instance.Ajouter(m_article);
+		}
 
 		public virtual bool ConfirmerSuppression(ArticlePhilatélique p_article)
 		{
