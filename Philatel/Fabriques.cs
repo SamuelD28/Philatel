@@ -26,20 +26,44 @@ namespace Philatel
 
 		private LesFabriques(){}
 
-        Dictionary<Type, IFabriqueCommande> m_fabriques = new Dictionary<Type, IFabriqueCommande>();
+        private Dictionary<Type, IFabriqueCommande> m_fabriques = new Dictionary<Type, IFabriqueCommande>();
 
         public void Ajouter(Type p_typeArticle, IFabriqueCommande p_fabrique) => m_fabriques.Add(p_typeArticle, p_fabrique);
 
         public IFabriqueCommande FabriqueDe(Type p_type) => m_fabriques[p_type];
 
-		public IEnumerator<IFabriqueCommande> GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
+		public IEnumerator<IFabriqueCommande> GetEnumerator() => m_fabriques.Values.GetEnumerator();
 
-		IEnumerator IEnumerable.GetEnumerator()
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); //Pourquoi implementer sa?
+
+		private class LesFrabriquesEnumerator : IEnumerator<IFabriqueCommande>
 		{
-			throw new NotImplementedException();
+			private Dictionary<Type, IFabriqueCommande>.ValueCollection m_fabriquesCommandes;
+			private int CursorPosition { get; set; }
+
+			public LesFrabriquesEnumerator(Dictionary<Type, IFabriqueCommande>.ValueCollection fabriqueCommandes)
+			{
+				m_fabriquesCommandes = fabriqueCommandes;
+			}
+
+			public IFabriqueCommande Current => throw new NotImplementedException();
+
+			object IEnumerator.Current => throw new NotImplementedException();
+
+			public void Dispose()
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool MoveNext()
+			{
+				throw new NotImplementedException();
+			}
+
+			public void Reset()
+			{
+				throw new NotImplementedException();
+			}
 		}
 	}
 

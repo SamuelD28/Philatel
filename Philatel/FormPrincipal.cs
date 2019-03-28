@@ -139,13 +139,13 @@ namespace Philatel
         }
 
 		public void CompléterLeMenu(ToolStripMenuItem p_menu, EventHandler p_eh) 
-		{                                                                                
-			//foreach (var fab in m_fabriques)                                            
-			//{
-			//	var tsi = new ToolStripMenuItem(fab.Value.DescriptionPourMenu(), null, p_eh);
-			//	tsi.Tag = fab.Value; // .Key est l'identificateur, donc .Value est la fabrique
-			//	p_menu.DropDownItems.Add(tsi);
-			//}
+		{
+			foreach (IFabriqueCommande fab in LesFabriques.GetInstance())
+			{
+				var tsi = new ToolStripMenuItem(fab.DescriptionPourMenu(), null, p_eh);
+				tsi.Tag = fab; // .Key est l'identificateur, donc .Value est la fabrique
+				p_menu.DropDownItems.Add(tsi);
+			}
 		}
 
 		/*--Opération par les boutons sur le coté de la liste--*/
