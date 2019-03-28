@@ -115,7 +115,7 @@ namespace Philatel
         { }
 
         public string DescriptionPourMenu()
-            => "&Timbre seul";
+            => "Timbre seul";
 
         public ICommande CréerCommandeAjouter()
             => new CommandeAjoutTS();
@@ -136,7 +136,7 @@ namespace Philatel
         { }
 
         public string DescriptionPourMenu()
-            => "&Bloc de coin";
+            => "Bloc de coin";
 
         public ICommande CréerCommandeAjouter()
             => new CommandeAjoutBC();

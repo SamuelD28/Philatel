@@ -45,8 +45,7 @@ namespace PhilatelPPJO
         private FabriquePPJO()
         { }
 
-        public string DescriptionPourMenu()
-            => "&Pli premier jour officiel (PPJO)";
+        public string DescriptionPourMenu()=> "Pli premier jour officiel (PPJO)";
 
         public ICommande CréerCommandeAjouter()
            => new CommandeAjoutPPJO();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Philatel
@@ -32,37 +33,49 @@ namespace Philatel
 
         public IFabriqueCommande FabriqueDe(Type p_type) => m_fabriques[p_type];
 
-		public IEnumerator<IFabriqueCommande> GetEnumerator() => m_fabriques.Values.GetEnumerator();
+		public IEnumerator<IFabriqueCommande> GetEnumerator() => new LesFrabriquesEnumerator(m_fabriques);
 
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); //Pourquoi implementer sa?
 
 		private class LesFrabriquesEnumerator : IEnumerator<IFabriqueCommande>
 		{
-			private Dictionary<Type, IFabriqueCommande>.ValueCollection m_fabriquesCommandes;
+			private IFabriqueCommande[] m_fabriquesCommandes { get; }
 			private int CursorPosition { get; set; }
+			private int Count { get; }
 
-			public LesFrabriquesEnumerator(Dictionary<Type, IFabriqueCommande>.ValueCollection fabriqueCommandes)
+			public LesFrabriquesEnumerator(Dictionary<Type, IFabriqueCommande> fabriqueCommandes)
 			{
-				m_fabriquesCommandes = fabriqueCommandes;
+				CursorPosition = -1;
+				Count = fabriqueCommandes.Count;
+				m_fabriquesCommandes = new IFabriqueCommande[Count];
+				fabriqueCommandes.Values.CopyTo(m_fabriquesCommandes, 0);
+
+				Array.Sort(m_fabriquesCommandes, new ComparateurAlphabétique());
 			}
 
-			public IFabriqueCommande Current => throw new NotImplementedException();
+			public IFabriqueCommande Current => m_fabriquesCommandes[CursorPosition];
 
-			object IEnumerator.Current => throw new NotImplementedException();
+			object IEnumerator.Current => m_fabriquesCommandes[CursorPosition];
 
 			public void Dispose()
 			{
-				throw new NotImplementedException();
+
 			}
 
 			public bool MoveNext()
 			{
-				throw new NotImplementedException();
+				CursorPosition++;
+				return CursorPosition < Count;
 			}
 
-			public void Reset()
+			public void Reset() => CursorPosition = -1;
+		}
+
+		private class ComparateurAlphabétique : IComparer<IFabriqueCommande>
+		{
+			public int Compare(IFabriqueCommande x, IFabriqueCommande y)
 			{
-				throw new NotImplementedException();
+				return x.DescriptionPourMenu().CompareTo(y.DescriptionPourMenu());
 			}
 		}
 	}
