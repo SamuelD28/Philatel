@@ -71,9 +71,14 @@ namespace Philatel
 		{
 
 			ToolStripMenuItem tsi = (ToolStripMenuItem)p_sender;
-			IFabriqueCommande fab = (IFabriqueCommande)tsi.Tag;
+
+            FabriqueEtArticle fabriqueEtArticle = (FabriqueEtArticle)tsi.Tag;
+
+			IFabriqueCommande fab = (IFabriqueCommande)fabriqueEtArticle.Fabrique;
 			ICommande commande = fab.CréerCommandeAjouter();
 			commande.Exécuter();
+
+
 		}
 
 		private void opérationsAnnulerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,13 +168,26 @@ namespace Philatel
 			List<string> raccourcis_existants = new List<string>();
 			foreach (IFabriqueCommande fab in LesFabriques.GetInstance())
 			{
-				string raccourci = TrouvéRaccourciUnique(fab.DescriptionDuType, raccourcis_existants);
-				raccourcis_existants.Add(raccourci);
-				var tsi = new ToolStripMenuItem(raccourci, null, p_eh);
-				tsi.Tag = fab;
+				//string raccourci = TrouvéRaccourciUnique(fab.DescriptionDuType, raccourcis_existants);
+				//raccourcis_existants.Add(raccourci);
+				var tsi = new ToolStripMenuItem(fab.DescriptionDuType, null, p_eh);
+				tsi.Tag = new FabriqueEtArticle(fab, null);
 				tsi.ShowShortcutKeys = true;
 				p_menu.DropDownItems.Add(tsi);
 			}
+
+            foreach (var article in Document.Instance.TroisDerniersArticles())
+            {
+                foreach (var fabrique in LesFabriques.GetInstance())
+                {
+                    //string raccourci = TrouvéRaccourciUnique(fabrique.DescriptionDuType, raccourcis_existants);
+                   //raccourcis_existants.Add(raccourci);
+                    var tsi = new ToolStripMenuItem(fabrique.DescriptionDuType + " " + article.Motif, null, p_eh);
+                    tsi.Tag = new FabriqueEtArticle(fabrique, article);
+                    tsi.ShowShortcutKeys = true;
+                    p_menu.DropDownItems.Add(tsi);
+                }
+            }
 		}
 
 

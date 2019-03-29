@@ -17,7 +17,6 @@ namespace Philatel
 		public const string NomFichierPhilatélie = "Philatélie.données";
 		public const int NoPremierArticle = 1;
 		public static Document Instance => m_docUnique.Value;
-        public static IEnumerable<string> ObtenirTousLesMotifs => m_tousLesMotifs;
 
 		//Propriétés privés
 		private static GestionCommandes Commandes => GestionCommandes.GetInstance();
@@ -25,9 +24,11 @@ namespace Philatel
 		private Stack<ArticlePhilatélique> m_articles;
 		private int m_noProchainArticle;
 		private bool m_docModifié = false;
-        private static ICollection<string> m_tousLesMotifs = new List<string>() { "Fleurie", "Paysage", "Monument" };
+        private ICollection<string> m_tousLesMotifs = new List<string>() { "Fleurie", "Paysage", "Monument" };
 
-        public static void AjouterMotif(string p_motif)
+        public IEnumerable<string> ObtenirTousLesMotifs() => m_tousLesMotifs;
+
+        public void AjouterMotif(string p_motif)
             => m_tousLesMotifs.Add(p_motif);
 
         /// <summary>
@@ -172,11 +173,13 @@ namespace Philatel
 		/// <returns>un accès non modifiable à tous les articles (sans ordre particulier)</returns>
 		public IEnumerable<ArticlePhilatélique> TousLesArticles() => m_articles;
 
-		/// <summary>
-		/// Renvoie un numéro d'article pas encore utilisé.
-		/// </summary>
-		/// <returns>un numéro d'article pas encore utilisé</returns>
-		public int NuméroNouvelArticle() => m_noProchainArticle++;
+        public IEnumerable<ArticlePhilatélique> TroisDerniersArticles() => m_articles.Skip(Math.Max(0, m_articles.Count() - 3));
+
+        /// <summary>
+        /// Renvoie un numéro d'article pas encore utilisé.
+        /// </summary>
+        /// <returns>un numéro d'article pas encore utilisé</returns>
+        public int NuméroNouvelArticle() => m_noProchainArticle++;
 
 		/// <summary>
 		/// Renvoie l'article demandé (par son numéro) ou null s'il n'existe pas.

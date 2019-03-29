@@ -33,7 +33,7 @@ namespace Philatel
             Article = p_article;
 
             comboBoxMotifs.Items.Clear();
-            foreach (string motif in Document.ObtenirTousLesMotifs)
+            foreach (string motif in Document.Instance.ObtenirTousLesMotifs())
             {
                 comboBoxMotifs.Items.Add(motif);
             }
@@ -93,7 +93,7 @@ namespace Philatel
             {
                 string motifFormaté = Char.ToUpper(textBoxMotif.Text[0]) + textBoxMotif.Text.Substring(1).ToLower();
                 motif = motifFormaté;
-                Document.AjouterMotif(motifFormaté);
+                Document.Instance.AjouterMotif(motifFormaté);
             }
 
             else

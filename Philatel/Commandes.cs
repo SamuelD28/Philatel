@@ -53,11 +53,30 @@ namespace Philatel
 		}
 	}
 
-	/// Classe abstraite CommandeAjout : 
-	/// <summary>
-	/// permet l'ajout d'un article (abstraite car on doit définir CréerDlgSaisie).
-	/// </summary>
-	[Serializable]
+    [Serializable]
+    public abstract class CommandeAjoutInitialisé : ICommande
+    {
+        public void Annuler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Exécuter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Rétablir()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// Classe abstraite CommandeAjout : 
+    /// <summary>
+    /// permet l'ajout d'un article (abstraite car on doit définir CréerDlgSaisie).
+    /// </summary>
+    [Serializable]
 	public abstract class CommandeAjout : ICommande
 	{
 		ArticlePhilatélique m_article;
