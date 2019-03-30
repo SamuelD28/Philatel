@@ -19,13 +19,7 @@ namespace Philatel
             InitializeComponent();
             CorrecteurDécimal.Corriger(textBoxValeurTimbre);
 
-            switch (p_opération)
-            {
-                case TypeDeSaisie.Ajout: Text = "Ajout d'un bloc de coin"; break;
-                case TypeDeSaisie.Modification: Text = "Modification d'un bloc de coin"; break;
-                case TypeDeSaisie.Suppression: Text = "Suppression d'un bloc de coin"; break;
-                case TypeDeSaisie.Autre: Debug.Assert(false, "Opération non implémentée"); break;
-            }
+            InitialiserTitre(p_opération);
 
             if (p_blocDeCoin != null)
             {
@@ -48,6 +42,7 @@ namespace Philatel
 			:base(ajout, m_article)
 		{
 			InitializeComponent();
+            InitialiserTitre(ajout);
 		}
 
 		public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
@@ -60,6 +55,17 @@ namespace Philatel
                 (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(),
                 p_motif, p_tailleEtForme, p_parution, (Coin)codeCoin, valeurTimbre, nbTimbres, p_prixPayé);
             return true;
+        }
+
+        public void InitialiserTitre(TypeDeSaisie p_typeDeSaisie)
+        {
+            switch (p_typeDeSaisie)
+            {
+                case TypeDeSaisie.Ajout: Text = "Ajout d'un bloc de coin"; break;
+                case TypeDeSaisie.Modification: Text = "Modification d'un bloc de coin"; break;
+                case TypeDeSaisie.Suppression: Text = "Suppression d'un bloc de coin"; break;
+                case TypeDeSaisie.Autre: Debug.Assert(false, "Opération non implémentée"); break;
+            }
         }
     }
 }

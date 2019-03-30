@@ -19,12 +19,7 @@ namespace Philatel
             InitializeComponent();
             CorrecteurDécimal.Corriger(textBoxValeurTimbre);
 
-            switch (p_opération)
-            {
-                case TypeDeSaisie.Ajout: Text = "Ajout d'un timbre seul"; break;
-                case TypeDeSaisie.Modification: Text = "Modification d'un timbre seul"; break;
-                case TypeDeSaisie.Autre: Debug.Assert(false, "Opération non implémentée"); break;
-            }
+            InitialiserTitre(p_opération);
 
             if (p_timbre != null)
             {
@@ -34,9 +29,10 @@ namespace Philatel
         }
 
 		public DlgSaisieTimbreSeul(TypeDeSaisie ajout, ArticlePhilatélique m_article)
-			: base(ajout ,m_article)
+			: base(ajout, m_article)
 		{
 			InitializeComponent();
+            InitialiserTitre(ajout);
 		}
 
 		public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
@@ -48,6 +44,16 @@ namespace Philatel
                 (Article != null) ? Article.Numéro : Document.Instance.NuméroNouvelArticle(),
                 p_motif, p_tailleEtForme, p_parution, valeurTimbre, oblitération, p_prixPayé);
             return true;
+        }
+
+        public void InitialiserTitre(TypeDeSaisie p_typeDeSaisie)
+        {
+            switch (p_typeDeSaisie)
+            {
+                case TypeDeSaisie.Ajout: Text = "Ajout d'un timbre seul"; break;
+                case TypeDeSaisie.Modification: Text = "Modification d'un timbre seul"; break;
+                case TypeDeSaisie.Autre: Debug.Assert(false, "Opération non implémentée"); break;
+            }
         }
     }
 }

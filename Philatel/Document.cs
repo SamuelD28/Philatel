@@ -40,10 +40,10 @@ namespace Philatel
 			{
 				Récupérer();
 
-				if (m_articles.Count == 0)
-				{
-					DataSeed(); //Temporaire. Utiliser pour tester
-				}
+				//if (m_articles.Count == 0)
+				//{
+				//	DataSeed(); //Temporaire. Utiliser pour tester
+				//}
 			}
 			catch
 			{

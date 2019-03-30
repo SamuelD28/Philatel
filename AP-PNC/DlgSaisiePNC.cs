@@ -19,19 +19,14 @@ namespace AP_PNC
 		public DlgSaisiePNC(TypeDeSaisie p_saisie, ArticlePhilatélique p_article) : base(p_saisie, p_article)
 		{
 			InitializeComponent();
+            InitialiserTitre(p_saisie);
 		}
 
 		public DlgSaisiePNC(TypeDeSaisie p_opération, PlancheNonCoupée p_pnc) 
             : base(p_opération, p_pnc)
         {
             InitializeComponent();
-
-            switch (p_opération)
-            {
-                case TypeDeSaisie.Ajout: Text = "Ajout d'une planche non coupée"; break;
-                case TypeDeSaisie.Modification: Text = "Modification d'une planche non coupée"; break;
-                case TypeDeSaisie.Autre: Debug.Assert(false, "Opération non implémentée"); break;
-            }
+            InitialiserTitre(p_opération);
 
             if (p_pnc != null)
             {
@@ -58,6 +53,16 @@ namespace AP_PNC
                 nombreTimbres, valeurPlanche, nombreTimbresDifférents, nomDesigner, nombreLignes, nombreColonnes, p_prixPayé);
 
             return true;
+        }
+
+        public void InitialiserTitre(TypeDeSaisie p_typeDeSaisie)
+        {
+            switch (p_typeDeSaisie)
+            {
+                case TypeDeSaisie.Ajout: Text = "Ajout d'une planche non coupée"; break;
+                case TypeDeSaisie.Modification: Text = "Modification d'une planche non coupée"; break;
+                case TypeDeSaisie.Autre: Debug.Assert(false, "Opération non implémentée"); break;
+            }
         }
     }
 }

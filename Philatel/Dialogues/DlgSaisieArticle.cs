@@ -115,6 +115,6 @@ namespace Philatel
         public virtual bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             throw new NotImplementedException(); // Doit être définie dans la classe dérivée (devait être
-        }                                        //  abstraite mais on ne peut pas pour l'éditeur visuel)
+        }
     }
 }
