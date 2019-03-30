@@ -135,10 +135,10 @@ namespace Philatel
 			string raccourciReconstituer = "";
 			foreach (string mot in raccourci.Split(' '))
 			{
-				int indexRaccourci = raccourcis_existants.FindIndex(s => s.ToLower().Contains("9" + char.ToLower(mot[0])));
+				int indexRaccourci = raccourcis_existants.FindIndex(s => s.ToLower().Contains("&" + char.ToLower(mot[0])));
 				if (indexRaccourci == -1 && !raccourciTrouver)
 				{
-					raccourciReconstituer += "9" + mot + " ";
+					raccourciReconstituer += "&" + mot + " ";
 					raccourciTrouver = true;
 				}
 				else
@@ -150,14 +150,14 @@ namespace Philatel
 				char[] voyelles = new char[] { 'a', 'e', 'i', 'o', 'u', 'y' };
 				foreach (char voyelle in voyelles)
 				{
-					if (raccourcis_existants.FindIndex(s => s.ToLower().Contains("9" + voyelle)) == -1 &&
+					if (raccourcis_existants.FindIndex(s => s.ToLower().Contains("&" + voyelle)) == -1 &&
 						raccourciReconstituer.IndexOf(voyelle) != -1 &&
 						!raccourciTrouver)
 					{
 						int index = raccourciReconstituer.IndexOf(voyelle);
 						string debut = raccourci.Substring(0, index);
 						string fin = raccourciReconstituer.Substring(index, raccourciReconstituer.Length - index);
-						raccourciReconstituer = debut + "9" + fin;
+						raccourciReconstituer = debut + "&" + fin;
 						raccourciTrouver = true;
 					}
 				}
