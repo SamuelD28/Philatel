@@ -135,9 +135,10 @@ namespace Philatel
 			string raccourciReconstituer = "";
 			foreach (string mot in raccourci.Split(' '))
 			{
-				if (raccourcis_existants.FindIndex(s => s.Contains("&" + char.ToLower(mot[0]))) == -1)
+				int indexRaccourci = raccourcis_existants.FindIndex(s => s.ToLower().Contains("9" + char.ToLower(mot[0])));
+				if (indexRaccourci == -1 && !raccourciTrouver)
 				{
-					raccourciReconstituer += "&" + mot + " ";
+					raccourciReconstituer += "9" + mot + " ";
 					raccourciTrouver = true;
 				}
 				else
@@ -149,13 +150,13 @@ namespace Philatel
 				char[] voyelles = new char[] { 'a', 'e', 'i', 'o', 'u', 'y' };
 				foreach(char voyelle in voyelles)
 				{
-					if (raccourcis_existants.FindIndex(s => s.StartsWith("&" + voyelle)) == -1 &&
+					if (raccourcis_existants.FindIndex(s => s.StartsWith("9" + voyelle)) == -1 &&
 						raccourciReconstituer.IndexOf(voyelle) != -1)
 					{
 						int index = raccourciReconstituer.IndexOf(voyelle);
 						string debut = raccourci.Substring(0, index - 1);
-						string fin = raccourciReconstituer.Substring(index, raccourciReconstituer.Length);
-						raccourciReconstituer = debut + "&" + fin;
+						string fin = raccourciReconstituer.Substring(index, raccourciReconstituer.Length - index);
+						raccourciReconstituer = debut + "9" + fin;
 					}
 				}
 			}
@@ -168,9 +169,9 @@ namespace Philatel
 			List<string> raccourcis_existants = new List<string>();
 			foreach (IFabriqueCommande fab in LesFabriques.GetInstance())
 			{
-				//string raccourci = TrouvéRaccourciUnique(fab.DescriptionDuType, raccourcis_existants);
-				//raccourcis_existants.Add(raccourci);
-				var tsi = new ToolStripMenuItem(fab.DescriptionDuType, null, p_eh);
+				string raccourci = TrouvéRaccourciUnique(fab.DescriptionDuType, raccourcis_existants);
+				raccourcis_existants.Add(raccourci);
+				var tsi = new ToolStripMenuItem(raccourci, null, p_eh);
 				tsi.Tag = new FabriqueEtArticle(fab, null);
 				tsi.ShowShortcutKeys = true;
 				p_menu.DropDownItems.Add(tsi);
@@ -180,9 +181,9 @@ namespace Philatel
             {
                 foreach (var fabrique in LesFabriques.GetInstance())
                 {
-                    //string raccourci = TrouvéRaccourciUnique(fabrique.DescriptionDuType, raccourcis_existants);
-                   //raccourcis_existants.Add(raccourci);
-                    var tsi = new ToolStripMenuItem(fabrique.DescriptionDuType + " " + article.Motif, null, p_eh);
+					string raccourci = TrouvéRaccourciUnique(fabrique.DescriptionDuType, raccourcis_existants);
+					raccourcis_existants.Add(raccourci);
+					var tsi = new ToolStripMenuItem(raccourci + " " + article.Motif, null, p_eh);
                     tsi.Tag = new FabriqueEtArticle(fabrique, article);
                     tsi.ShowShortcutKeys = true;
                     p_menu.DropDownItems.Add(tsi);
