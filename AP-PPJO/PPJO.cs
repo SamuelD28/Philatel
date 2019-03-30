@@ -50,12 +50,16 @@ namespace PhilatelPPJO
         public ICommande CréerCommandeAjouter()
            => new CommandeAjoutPPJO();
 
+		public ICommande CréerCommandeAjouter(ArticlePhilatélique p_article)
+			=> new CommandeAjoutPPJO(p_article);
+
         public ICommande CréerCommandeModifier(ArticlePhilatélique p_articleCourant)
             => new CommandeModificationPPJO(p_articleCourant as PPJO);
 
         public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_articleCourant)
             => new CommandeSuppression(p_articleCourant);
-    }
+
+	}
     
     // NOTEZ QUE LES COMMANDES NE SONT PAS DES TYPES PUBLICS
 
@@ -65,8 +69,15 @@ namespace PhilatelPPJO
 	[Serializable]
     class CommandeAjoutPPJO : CommandeAjout
     {
-        public override DlgSaisieArticle CréerDlgSaisie()
-            => new DlgSaisiePPJO(TypeDeSaisie.Ajout, null);
+		private ArticlePhilatélique m_article;
+
+		public CommandeAjoutPPJO(ArticlePhilatélique p_article = null)
+		{
+			m_article = p_article;
+
+		}
+
+        public override DlgSaisieArticle CréerDlgSaisie() => new DlgSaisiePPJO(TypeDeSaisie.Ajout, m_article);
     }
 
     /// <summary>

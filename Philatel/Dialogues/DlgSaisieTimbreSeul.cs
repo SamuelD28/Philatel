@@ -13,7 +13,7 @@ namespace Philatel
 {
     public partial class DlgSaisieTimbreSeul : DlgSaisieArticle
     {
-        public DlgSaisieTimbreSeul(TypeDeSaisie p_opération, TimbreSeul p_timbre)
+		public DlgSaisieTimbreSeul(TypeDeSaisie p_opération, TimbreSeul p_timbre)
             : base(p_opération, p_timbre)
         {
             InitializeComponent();
@@ -33,7 +33,13 @@ namespace Philatel
             }
         }
 
-        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
+		public DlgSaisieTimbreSeul(TypeDeSaisie ajout, ArticlePhilatélique m_article)
+			: base(ajout ,m_article)
+		{
+			InitializeComponent();
+		}
+
+		public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             double valeurTimbre = DoubleAvecMinimum(textBoxValeurTimbre, 0.01, "Valeur du timbre");
             Oblitération oblitération = checkBoxOblitéré.Checked ? Oblitération.Normale : Oblitération.Aucune;

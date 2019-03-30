@@ -14,7 +14,7 @@ namespace PhilatelPPJO
 {
     partial class DlgSaisiePPJO : DlgSaisieArticle
     {
-        public DlgSaisiePPJO(TypeDeSaisie p_opération, PPJO p_ppjo)
+		public DlgSaisiePPJO(TypeDeSaisie p_opération, PPJO p_ppjo)
             : base(p_opération, p_ppjo)
         {
             InitializeComponent();
@@ -31,7 +31,13 @@ namespace PhilatelPPJO
                 textBoxValeurTimbres.Text = $"{p_ppjo.ValeurTimbres:F2}";
         }
 
-        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
+		public DlgSaisiePPJO(TypeDeSaisie ajout, ArticlePhilatélique m_article)
+			:base(ajout, m_article)
+		{
+			InitializeComponent();
+		}
+
+		public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             double valeurTimbres = DoubleAvecMinimum(textBoxValeurTimbres, 0.01, "Valeur des timbres");
 

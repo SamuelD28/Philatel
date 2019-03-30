@@ -13,7 +13,7 @@ namespace Philatel
 {
     public partial class DlgSaisieBlocDeCoin : DlgSaisieArticle
     {
-        public DlgSaisieBlocDeCoin(TypeDeSaisie p_opération, BlocDeCoin p_blocDeCoin)
+		public DlgSaisieBlocDeCoin(TypeDeSaisie p_opération, BlocDeCoin p_blocDeCoin)
             : base(p_opération, p_blocDeCoin)
         {
             InitializeComponent();
@@ -44,7 +44,13 @@ namespace Philatel
             }
         }
 
-        public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
+		public DlgSaisieBlocDeCoin(TypeDeSaisie ajout, ArticlePhilatélique m_article)
+			:base(ajout, m_article)
+		{
+			InitializeComponent();
+		}
+
+		public override bool FinirValidation(string p_motif, string p_tailleEtForme, DateTime? p_parution, double? p_prixPayé)
         {
             double valeurTimbre = DoubleAvecMinimum(textBoxValeurTimbre, 0.01, "Valeur d'un timbre");
             int nbTimbres = Int32AvecMinimum(textBoxNombreTimbres, 1, "Nombre de timbres");

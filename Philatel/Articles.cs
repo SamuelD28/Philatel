@@ -119,12 +119,16 @@ namespace Philatel
         public ICommande CréerCommandeAjouter()
             => new CommandeAjoutTS();
 
+		public ICommande CréerCommandeAjouter(ArticlePhilatélique p_article)
+			=> new CommandeAjoutTS(p_article);
+
         public ICommande CréerCommandeModifier(ArticlePhilatélique p_articleCourant)
             => new CommandeModificationTS(p_articleCourant as TimbreSeul);
 
         public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_articleCourant)
             => new CommandeSuppression(p_articleCourant); // Approche générale
-    }
+
+	}
 
     public class FabriqueBlocDeCoin : IFabriqueCommande
     {
@@ -138,12 +142,9 @@ namespace Philatel
 
 		public ICommande CréerCommandeAjouter() => new CommandeAjoutBC();
 
-		public ICommande CréerCommandeAjouter(ArticlePhilatélique p_article)
-		{
-			throw new NotImplementedException();
-		}
+		public ICommande CréerCommandeAjouter(ArticlePhilatélique p_article) => new CommandeAjoutBC(p_article);
 
-        public ICommande CréerCommandeModifier(ArticlePhilatélique p_articleCourant)
+		public ICommande CréerCommandeModifier(ArticlePhilatélique p_articleCourant)
             => new CommandeModificationBC(p_articleCourant as BlocDeCoin);
 
         public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_articleCourant)
@@ -158,8 +159,15 @@ namespace Philatel
 	[Serializable]
     public class CommandeAjoutTS : CommandeAjout
     {
+		ArticlePhilatélique m_article;
+
+		public CommandeAjoutTS(ArticlePhilatélique p_article = null)
+		{
+			m_article = p_article;
+		}
+
         public override DlgSaisieArticle CréerDlgSaisie()
-            => new DlgSaisieTimbreSeul(TypeDeSaisie.Ajout, null);
+            => new DlgSaisieTimbreSeul(TypeDeSaisie.Ajout, m_article);
     }
 
 	[Serializable]
@@ -176,8 +184,15 @@ namespace Philatel
 	[Serializable]
     public class CommandeAjoutBC : CommandeAjout
     {
+		ArticlePhilatélique m_article;
+
+		public CommandeAjoutBC(ArticlePhilatélique p_article = null)
+		{
+			m_article = p_article;
+		}
+
         public override DlgSaisieArticle CréerDlgSaisie()
-            => new DlgSaisieBlocDeCoin(TypeDeSaisie.Ajout, null);
+            => new DlgSaisieBlocDeCoin(TypeDeSaisie.Ajout, m_article);
     }
 
 	[Serializable]
