@@ -72,7 +72,7 @@ namespace Philatel
 
 			ToolStripMenuItem tsi = (ToolStripMenuItem)p_sender;
 
-            FabriqueEtArticle fabriqueEtArticle = (FabriqueEtArticle)tsi.Tag;
+			FabriqueEtArticle fabriqueEtArticle = (FabriqueEtArticle)tsi.Tag;
 
 			IFabriqueCommande fab = (IFabriqueCommande)fabriqueEtArticle.Fabrique;
 			ICommande commande = fab.CréerCommandeAjouter(fabriqueEtArticle.Article);
@@ -148,15 +148,17 @@ namespace Philatel
 			if (!raccourciTrouver)
 			{
 				char[] voyelles = new char[] { 'a', 'e', 'i', 'o', 'u', 'y' };
-				foreach(char voyelle in voyelles)
+				foreach (char voyelle in voyelles)
 				{
-					if (raccourcis_existants.FindIndex(s => s.StartsWith("9" + voyelle)) == -1 &&
-						raccourciReconstituer.IndexOf(voyelle) != -1)
+					if (raccourcis_existants.FindIndex(s => s.ToLower().Contains("9" + voyelle)) == -1 &&
+						raccourciReconstituer.IndexOf(voyelle) != -1 &&
+						!raccourciTrouver)
 					{
 						int index = raccourciReconstituer.IndexOf(voyelle);
-						string debut = raccourci.Substring(0, index - 1);
+						string debut = raccourci.Substring(0, index);
 						string fin = raccourciReconstituer.Substring(index, raccourciReconstituer.Length - index);
 						raccourciReconstituer = debut + "9" + fin;
+						raccourciTrouver = true;
 					}
 				}
 			}
@@ -177,18 +179,18 @@ namespace Philatel
 				p_menu.DropDownItems.Add(tsi);
 			}
 
-            foreach (var article in Document.Instance.TroisDerniersArticles())
-            {
-                foreach (var fabrique in LesFabriques.GetInstance())
-                {
+			foreach (var article in Document.Instance.TroisDerniersArticles())
+			{
+				foreach (var fabrique in LesFabriques.GetInstance())
+				{
 					string raccourci = TrouvéRaccourciUnique(fabrique.DescriptionDuType, raccourcis_existants);
 					raccourcis_existants.Add(raccourci);
 					var tsi = new ToolStripMenuItem(raccourci + " " + article.Motif, null, p_eh);
-                    tsi.Tag = new FabriqueEtArticle(fabrique, article);
-                    tsi.ShowShortcutKeys = true;
-                    p_menu.DropDownItems.Add(tsi);
-                }
-            }
+					tsi.Tag = new FabriqueEtArticle(fabrique, article);
+					tsi.ShowShortcutKeys = true;
+					p_menu.DropDownItems.Add(tsi);
+				}
+			}
 		}
 
 
