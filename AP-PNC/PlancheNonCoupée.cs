@@ -47,6 +47,8 @@ namespace AP_PNC
 
 		public ICommande CréerCommandeAjouter() => new CommandeAjoutPNC();
 
+		public ICommande CréerCommandeAjouter(ArticlePhilatélique p_article) => new CommandeAjoutPNC(p_article);
+
 		public ICommande CréerCommandeModifier(ArticlePhilatélique p_article) => new CommandeModificationPNC(p_article as PlancheNonCoupée);
 		
 		public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_article) => new CommandeSuppression(p_article);
@@ -57,7 +59,14 @@ namespace AP_PNC
 	[Serializable]
 	class CommandeAjoutPNC : CommandeAjout
 	{
-		public override DlgSaisieArticle CréerDlgSaisie() => new DlgSaisiePNC(TypeDeSaisie.Ajout, null);
+		private ArticlePhilatélique m_article;
+
+		public CommandeAjoutPNC(ArticlePhilatélique p_article = null)
+		{
+			m_article = p_article;
+		}
+
+		public override DlgSaisieArticle CréerDlgSaisie() => new DlgSaisiePNC(TypeDeSaisie.Ajout, m_article);
 	}
 
 	[Serializable]

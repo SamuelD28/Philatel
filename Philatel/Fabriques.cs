@@ -90,6 +90,7 @@ namespace Philatel
     {
         string DescriptionDuType { get; }
         ICommande CréerCommandeAjouter();
+        ICommande CréerCommandeAjouter(ArticlePhilatélique p_article);
         ICommande CréerCommandeModifier(ArticlePhilatélique p_article);
         ICommande CréerCommandeSupprimer(ArticlePhilatélique p_article);
     }

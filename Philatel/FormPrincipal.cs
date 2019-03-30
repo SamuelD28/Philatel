@@ -75,7 +75,7 @@ namespace Philatel
             FabriqueEtArticle fabriqueEtArticle = (FabriqueEtArticle)tsi.Tag;
 
 			IFabriqueCommande fab = (IFabriqueCommande)fabriqueEtArticle.Fabrique;
-			ICommande commande = fab.CréerCommandeAjouter();
+			ICommande commande = fab.CréerCommandeAjouter(fabriqueEtArticle.Article);
 			commande.Exécuter();
 
 

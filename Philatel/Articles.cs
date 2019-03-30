@@ -136,15 +136,20 @@ namespace Philatel
 
 		string IFabriqueCommande.DescriptionDuType => "Bloc en coin";
 
-		public ICommande CréerCommandeAjouter()
-            => new CommandeAjoutBC();
+		public ICommande CréerCommandeAjouter() => new CommandeAjoutBC();
+
+		public ICommande CréerCommandeAjouter(ArticlePhilatélique p_article)
+		{
+			throw new NotImplementedException();
+		}
 
         public ICommande CréerCommandeModifier(ArticlePhilatélique p_articleCourant)
             => new CommandeModificationBC(p_articleCourant as BlocDeCoin);
 
         public ICommande CréerCommandeSupprimer(ArticlePhilatélique p_articleCourant)
             => new CommandeSuppressionBC(p_articleCourant as BlocDeCoin); // Particulier
-    }
+
+	}
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////// Les commandes des deux types d'articles de base

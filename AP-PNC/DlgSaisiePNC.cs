@@ -16,7 +16,12 @@ namespace AP_PNC
 {
     public partial class DlgSaisiePNC : DlgSaisieArticle
     {
-        public DlgSaisiePNC(TypeDeSaisie p_opération, PlancheNonCoupée p_pnc) 
+		public DlgSaisiePNC(TypeDeSaisie p_saisie, ArticlePhilatélique p_article) : base(p_saisie, p_article)
+		{
+			InitializeComponent();
+		}
+
+		public DlgSaisiePNC(TypeDeSaisie p_opération, PlancheNonCoupée p_pnc) 
             : base(p_opération, p_pnc)
         {
             InitializeComponent();
